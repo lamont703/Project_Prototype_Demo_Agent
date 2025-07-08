@@ -113,49 +113,49 @@ class AIAssistant {
 
     setupEventListeners() {
         if (this.assistantButton) {
-            this.assistantButton.addEventListener('click', () => this.toggleAssistant());
+            this.addMobileEventListener(this.assistantButton, 'click', () => this.toggleAssistant());
         }
         
         if (this.closeButton) {
-            this.closeButton.addEventListener('click', () => this.closeAssistant());
+            this.addMobileEventListener(this.closeButton, 'click', () => this.closeAssistant());
         }
         
         // Demo control event listeners
         if (this.startVoiceTourBtn) {
-            this.startVoiceTourBtn.addEventListener('click', () => this.startVoiceTour());
+            this.addMobileEventListener(this.startVoiceTourBtn, 'click', () => this.startVoiceTour());
         }
         
         if (this.startVoiceDemoBtn) {
-            this.startVoiceDemoBtn.addEventListener('click', () => this.startVoiceDemo());
+            this.addMobileEventListener(this.startVoiceDemoBtn, 'click', () => this.startVoiceDemo());
         }
         
         if (this.dashboardDemoBtn) {
-            this.dashboardDemoBtn.addEventListener('click', () => this.startDashboardDemo());
+            this.addMobileEventListener(this.dashboardDemoBtn, 'click', () => this.startDashboardDemo());
         }
         
         if (this.voiceQABtn) {
-            this.voiceQABtn.addEventListener('click', () => this.startVoiceQA());
+            this.addMobileEventListener(this.voiceQABtn, 'click', () => this.startVoiceQA());
         }
         
         // Voice control event listeners
         if (this.voiceToggleBtn) {
-            this.voiceToggleBtn.addEventListener('click', () => this.toggleVoice());
+            this.addMobileEventListener(this.voiceToggleBtn, 'click', () => this.toggleVoice());
         }
         
         if (this.pauseVoiceBtn) {
-            this.pauseVoiceBtn.addEventListener('click', () => this.pauseVoice());
+            this.addMobileEventListener(this.pauseVoiceBtn, 'click', () => this.pauseVoice());
         }
         
         if (this.stopVoiceBtn) {
-            this.stopVoiceBtn.addEventListener('click', () => this.stopVoice());
+            this.addMobileEventListener(this.stopVoiceBtn, 'click', () => this.stopVoice());
         }
         
         if (this.voiceSettingsBtn) {
-            this.voiceSettingsBtn.addEventListener('click', () => this.toggleVoiceSettings());
+            this.addMobileEventListener(this.voiceSettingsBtn, 'click', () => this.toggleVoiceSettings());
         }
         
         if (this.testVoiceBtn) {
-            this.testVoiceBtn.addEventListener('click', () => this.testVoice());
+            this.addMobileEventListener(this.testVoiceBtn, 'click', () => this.testVoice());
         }
         
         // Voice settings event listeners
@@ -173,15 +173,15 @@ class AIAssistant {
         
         // Minimized control event listeners
         if (this.miniExpandBtn) {
-            this.miniExpandBtn.addEventListener('click', () => this.expandAssistant());
+            this.addMobileEventListener(this.miniExpandBtn, 'click', () => this.expandAssistant());
         }
         
         if (this.miniPauseBtn) {
-            this.miniPauseBtn.addEventListener('click', () => this.pauseVoice());
+            this.addMobileEventListener(this.miniPauseBtn, 'click', () => this.pauseVoice());
         }
         
         if (this.miniStopBtn) {
-            this.miniStopBtn.addEventListener('click', () => this.stopVoice());
+            this.addMobileEventListener(this.miniStopBtn, 'click', () => this.stopVoice());
         }
         
         // Close settings when clicking outside
@@ -203,6 +203,12 @@ class AIAssistant {
                     this.voiceEnabled = true;
                     this.updateVoiceStatus('Voice AI Ready', 'Ready to provide voice-guided demos');
                     console.log('Voice AI initialized successfully');
+                    
+                    // Mobile-specific initialization
+                    if (this.isMobile) {
+                        console.log('📱 Mobile device detected - initializing mobile voice features');
+                        this.initializeMobileVoice();
+                    }
                 } else {
                     this.voiceEnabled = false;
                     this.updateVoiceStatus('Voice Unavailable', 'Voice features are not available');
@@ -217,6 +223,49 @@ class AIAssistant {
             console.error('Error initializing voice:', error);
             this.voiceEnabled = false;
             this.updateVoiceStatus('Voice Error', 'Voice initialization failed');
+        }
+    }
+    
+    initializeMobileVoice() {
+        // For mobile devices, especially iOS, we need to handle audio differently
+        if (this.isMobile && this.voiceManager) {
+            // Ensure audio context is initialized on first user interaction
+            const initMobileAudio = () => {
+                console.log('📱 Initializing mobile audio context');
+                
+                // Test if Web Speech API is available
+                if ('speechSynthesis' in window) {
+                    console.log('🎙️ Web Speech API available on mobile');
+                    
+                    // Pre-load voices for better mobile experience
+                    const loadVoices = () => {
+                        const voices = speechSynthesis.getVoices();
+                        console.log(`🎙️ Found ${voices.length} voices on mobile:`, voices.map(v => v.name));
+                    };
+                    
+                    if (speechSynthesis.getVoices().length > 0) {
+                        loadVoices();
+                    } else {
+                        speechSynthesis.addEventListener('voiceschanged', loadVoices);
+                    }
+                } else {
+                    console.warn('📱 Web Speech API not available on this mobile device');
+                }
+            };
+            
+            // Initialize on first touch/click
+            if (this.isTouch) {
+                const firstTouch = () => {
+                    initMobileAudio();
+                    document.removeEventListener('touchstart', firstTouch);
+                    document.removeEventListener('click', firstTouch);
+                };
+                
+                document.addEventListener('touchstart', firstTouch, { once: true });
+                document.addEventListener('click', firstTouch, { once: true });
+            } else {
+                initMobileAudio();
+            }
         }
     }
 

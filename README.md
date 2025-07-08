@@ -489,6 +489,31 @@ The included demo showcases a typical SaaS product page with:
 - **Touch Detection**: Automatic detection and optimization for touch devices
 - **Responsive Breakpoints**: Comprehensive coverage for all mobile device sizes
 
+## 🐛 Mobile Device Debugging
+
+### iOS Voice Issues
+
+If you're experiencing no sound on iPhone:
+
+1. Add `?debug=true` to the URL to enable mobile debugging
+2. The debug panel will show voice capabilities and test results
+3. Make sure you interact with the page first (iOS requires user interaction for audio)
+4. The system will automatically fall back to Web Speech API if ElevenLabs isn't available
+
+### Mobile Debug Features
+
+- **Auto-Detection**: Automatically detects mobile devices and iOS
+- **Voice Testing**: Tests both ElevenLabs API and Web Speech API
+- **Touch Response**: Measures touch event responsiveness
+- **Female Voice Selection**: Automatically selects best female voice available
+- **Debug Panel**: Shows real-time logs and status
+
+### Debug URLs
+
+- Local testing: `http://localhost:8000/?debug=true`
+- Mobile debugging: `http://localhost:8000/?mobile-debug=true`
+- Console commands: `window.enableMobileDebug()` or `window.mobileDebugger.testVoice()`
+
 ## 🤝 Contributing
 
 Feel free to submit issues, feature requests, or pull requests to improve the AI Product Demo Specialist.
