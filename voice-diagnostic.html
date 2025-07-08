@@ -1,0 +1,438 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Voice Diagnostic - Why Is My AI Voice Still Robotic?</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 20px;
+            background: linear-gradient(135deg, #e53e3e 0%, #fd9853 100%);
+            min-height: 100vh;
+            color: #333;
+        }
+
+        .container {
+            background: white;
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            color: #e53e3e;
+            text-align: center;
+            margin-bottom: 30px;
+            font-size: 2em;
+        }
+
+        .diagnostic-section {
+            margin-bottom: 30px;
+            padding: 20px;
+            border-radius: 15px;
+            border: 2px solid #e2e8f0;
+        }
+
+        .status-good {
+            background: #c6f6d5;
+            border-color: #9ae6b4;
+        }
+
+        .status-bad {
+            background: #fed7d7;
+            border-color: #fc8181;
+        }
+
+        .status-warning {
+            background: #fef5e7;
+            border-color: #f6e05e;
+        }
+
+        .status-icon {
+            font-size: 1.5em;
+            margin-right: 10px;
+        }
+
+        .diagnostic-result {
+            padding: 15px;
+            border-radius: 10px;
+            margin: 15px 0;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+        }
+
+        .fix-button {
+            background: linear-gradient(135deg, #48bb78, #38a169);
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 1em;
+            font-weight: 600;
+            margin: 10px 10px 10px 0;
+            transition: all 0.3s ease;
+        }
+
+        .fix-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(72, 187, 120, 0.4);
+        }
+
+        .test-button {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 1em;
+            font-weight: 600;
+            margin: 10px 10px 10px 0;
+            transition: all 0.3s ease;
+        }
+
+        .test-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+        }
+
+        .solution-steps {
+            background: #e6fffa;
+            border: 2px solid #4fd1c7;
+            padding: 20px;
+            border-radius: 15px;
+            margin: 20px 0;
+        }
+
+        .solution-steps h3 {
+            color: #234e52;
+            margin-top: 0;
+        }
+
+        .solution-steps ol {
+            color: #234e52;
+        }
+
+        .solution-steps li {
+            margin-bottom: 10px;
+        }
+
+        .code-block {
+            background: #2d3748;
+            color: #e2e8f0;
+            padding: 15px;
+            border-radius: 10px;
+            font-family: 'Consolas', 'Monaco', monospace;
+            margin: 10px 0;
+            overflow-x: auto;
+        }
+
+        .highlight {
+            background: #fef5e7;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-weight: bold;
+        }
+
+        .comparison-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+
+        .comparison-table th,
+        .comparison-table td {
+            border: 1px solid #e2e8f0;
+            padding: 12px;
+            text-align: left;
+        }
+
+        .comparison-table th {
+            background: #f7fafc;
+            font-weight: 600;
+        }
+
+        .comparison-table .good {
+            color: #22543d;
+            font-weight: 600;
+        }
+
+        .comparison-table .bad {
+            color: #c53030;
+            font-weight: 600;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h1>🔍 Voice Diagnostic Tool</h1>
+        <p style="text-align: center; font-size: 1.1em; color: #666; margin-bottom: 30px;">
+            Let's figure out why your AI voice is still robotic and fix it!
+        </p>
+
+        <div class="diagnostic-section">
+            <h2>📊 Current System Status</h2>
+            <div id="system-status">
+                <div class="diagnostic-result">
+                    <span class="status-icon">🔄</span>
+                    <span>Running diagnostics...</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="diagnostic-section">
+            <h2>🎙️ Voice System Analysis</h2>
+            <div id="voice-analysis">
+                <div class="diagnostic-result">
+                    <span class="status-icon">🔄</span>
+                    <span>Analyzing voice configuration...</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="diagnostic-section">
+            <h2>🔧 Configuration Details</h2>
+            <div id="config-details">
+                <div class="diagnostic-result">
+                    <span class="status-icon">🔄</span>
+                    <span>Loading configuration...</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="diagnostic-section">
+            <h2>🧪 Voice Quality Test</h2>
+            <p>Test both voice systems to hear the difference:</p>
+            <button class="test-button" onclick="testCurrentVoice()">🎙️ Test Current Voice</button>
+            <button class="test-button" onclick="testWebSpeech()">🔊 Test Web Speech (Robotic)</button>
+            <button class="test-button" onclick="stopVoice()">🛑 Stop</button>
+        </div>
+
+        <div id="solution-section" style="display: none;">
+            <div class="solution-steps">
+                <h3>🚀 Solution: Get Human-like Voices</h3>
+                <p><strong>The issue:</strong> Your AI is using Web Speech API (robotic) instead of ElevenLabs API
+                    (human-like).</p>
+
+                <h4>Option 1: Get ElevenLabs API Key (Recommended)</h4>
+                <ol>
+                    <li>Go to <a href="https://elevenlabs.io" target="_blank" rel="noopener">ElevenLabs.io</a></li>
+                    <li>Create a free account (includes free credits)</li>
+                    <li>Get your API key from the dashboard</li>
+                    <li>Replace the key in your config:</li>
+                </ol>
+
+                <div class="code-block">
+                    ELEVENLABS_API_KEY: '<span style="color: #48bb78;">your_actual_api_key_here</span>'
+                </div>
+
+                <h4>Option 2: Improve Web Speech API</h4>
+                <p>If you want to stick with the free option, I can optimize the Web Speech settings for better quality.
+                </p>
+
+                <button class="fix-button" onclick="showApiKeyInstructions()">📝 Show API Key Instructions</button>
+                <button class="fix-button" onclick="optimizeWebSpeech()">🔧 Optimize Web Speech</button>
+            </div>
+        </div>
+
+        <div id="comparison-section">
+            <h2>📈 Voice Quality Comparison</h2>
+            <table class="comparison-table">
+                <thead>
+                    <tr>
+                        <th>Feature</th>
+                        <th>ElevenLabs API</th>
+                        <th>Web Speech API</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Voice Quality</td>
+                        <td class="good">Human-like, Natural</td>
+                        <td class="bad">Robotic, Mechanical</td>
+                    </tr>
+                    <tr>
+                        <td>Emotional Range</td>
+                        <td class="good">Rich expressions</td>
+                        <td class="bad">Monotone</td>
+                    </tr>
+                    <tr>
+                        <td>Voice Options</td>
+                        <td class="good">1000+ professional voices</td>
+                        <td class="bad">Limited system voices</td>
+                    </tr>
+                    <tr>
+                        <td>Consistency</td>
+                        <td class="good">Always same quality</td>
+                        <td class="bad">Varies by browser/device</td>
+                    </tr>
+                    <tr>
+                        <td>Cost</td>
+                        <td class="bad">Paid (free tier available)</td>
+                        <td class="good">Free</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div id="api-instructions" style="display: none;" class="solution-steps">
+            <h3>📝 Detailed API Key Setup</h3>
+            <ol>
+                <li><strong>Visit ElevenLabs:</strong> Go to <a href="https://elevenlabs.io/sign-up"
+                        target="_blank" rel="noopener">https://elevenlabs.io/sign-up</a></li>
+                <li><strong>Create Account:</strong> Sign up with your email (free tier includes 10,000
+                    characters/month)</li>
+                <li><strong>Get API Key:</strong> Go to your profile → API Keys → Create new key</li>
+                <li><strong>Update Config:</strong> Open <code>config-simple.js</code> and replace:</li>
+            </ol>
+            <div class="code-block">
+                // Change this line:
+                ELEVENLABS_API_KEY: 'your_elevenlabs_api_key_here',
+
+                // To this (with your actual key):
+                ELEVENLABS_API_KEY: 'sk-your-actual-api-key-here',
+            </div>
+            <p><strong>That's it!</strong> Your AI voice will instantly become human-like and natural.</p>
+        </div>
+    </div>
+
+    <script src="config-simple.js"></script>
+    <script src="voice-config.js"></script>
+    <script>
+        let voiceManager;
+        let currentAudio = null;
+
+        document.addEventListener('DOMContentLoaded', async () => {
+            voiceManager = new VoiceManager();
+            runDiagnostics();
+        });
+
+        function runDiagnostics() {
+            // System Status
+            const systemStatus = document.getElementById('system-status');
+            const voiceAnalysis = document.getElementById('voice-analysis');
+            const configDetails = document.getElementById('config-details');
+            const solutionSection = document.getElementById('solution-section');
+
+            // Check API key configuration
+            const apiKeyConfigured = isApiKeyConfigured();
+            const apiKey = getConfig('ELEVENLABS_API_KEY');
+
+            // System Status
+            systemStatus.innerHTML = `
+                <div class="diagnostic-result ${apiKeyConfigured ? 'status-good' : 'status-bad'}">
+                    <span class="status-icon">${apiKeyConfigured ? '✅' : '❌'}</span>
+                    <span><strong>ElevenLabs API:</strong> ${apiKeyConfigured ? 'Configured' : 'Not Configured'}</span>
+                </div>
+                <div class="diagnostic-result ${voiceManager.isEnabled ? 'status-good' : 'status-bad'}">
+                    <span class="status-icon">${voiceManager.isEnabled ? '✅' : '❌'}</span>
+                    <span><strong>Voice System:</strong> ${voiceManager.isEnabled ? 'Enabled' : 'Disabled'}</span>
+                </div>
+                <div class="diagnostic-result ${getConfig('WEB_SPEECH_FALLBACK') ? 'status-warning' : 'status-bad'}">
+                    <span class="status-icon">${getConfig('WEB_SPEECH_FALLBACK') ? '⚠️' : '❌'}</span>
+                    <span><strong>Fallback:</strong> ${getConfig('WEB_SPEECH_FALLBACK') ? 'Web Speech Available' : 'No Fallback'}</span>
+                </div>
+            `;
+
+            // Voice Analysis
+            const usingElevenLabs = apiKeyConfigured;
+            const voiceSystem = usingElevenLabs ? 'ElevenLabs API' : 'Web Speech API';
+            const voiceQuality = usingElevenLabs ? 'Human-like' : 'Robotic';
+            const statusClass = usingElevenLabs ? 'status-good' : 'status-bad';
+
+            voiceAnalysis.innerHTML = `
+                <div class="diagnostic-result ${statusClass}">
+                    <span class="status-icon">${usingElevenLabs ? '🎭' : '🤖'}</span>
+                    <span><strong>Current Voice System:</strong> ${voiceSystem}</span>
+                </div>
+                <div class="diagnostic-result ${statusClass}">
+                    <span class="status-icon">${usingElevenLabs ? '✨' : '📢'}</span>
+                    <span><strong>Voice Quality:</strong> ${voiceQuality}</span>
+                </div>
+                <div class="diagnostic-result ${usingElevenLabs ? 'status-good' : 'status-warning'}">
+                    <span class="status-icon">${usingElevenLabs ? '🎙️' : '🔊'}</span>
+                    <span><strong>Current Voice:</strong> ${usingElevenLabs ? getVoiceCharacter(getConfig('DEFAULT_VOICE')).name : 'Browser Default'}</span>
+                </div>
+            `;
+
+            // Configuration Details
+            configDetails.innerHTML = `
+                <div class="diagnostic-result">
+                    <span class="status-icon">🔑</span>
+                    <span><strong>API Key:</strong> <span class="highlight">${apiKey === 'your_elevenlabs_api_key_here' ? 'NOT SET' : 'CONFIGURED'}</span></span>
+                </div>
+                <div class="diagnostic-result">
+                    <span class="status-icon">🤖</span>
+                    <span><strong>Model:</strong> <span class="highlight">${getConfig('ELEVENLABS_MODEL_ID')}</span></span>
+                </div>
+                <div class="diagnostic-result">
+                    <span class="status-icon">👩</span>
+                    <span><strong>Default Voice:</strong> <span class="highlight">${getConfig('DEFAULT_VOICE')}</span></span>
+                </div>
+                <div class="diagnostic-result">
+                    <span class="status-icon">🔧</span>
+                    <span><strong>Debug Mode:</strong> <span class="highlight">${getConfig('DEBUG_MODE') ? 'ON' : 'OFF'}</span></span>
+                </div>
+            `;
+
+            // Show solution if API key is not configured
+            if (!apiKeyConfigured) {
+                solutionSection.style.display = 'block';
+            }
+        }
+
+        async function testCurrentVoice() {
+            const text = voiceManager.isEnabled && isApiKeyConfigured()
+                ? "This is the ElevenLabs API voice - natural and human-like!"
+                : "This is the Web Speech API voice - sounds robotic and mechanical.";
+
+            try {
+                await voiceManager.speak(text);
+            } catch (error) {
+                console.error('Voice test failed:', error);
+                alert('Voice test failed. Check console for details.');
+            }
+        }
+
+        async function testWebSpeech() {
+            if (!('speechSynthesis' in window)) {
+                alert('Web Speech API not supported in this browser');
+                return;
+            }
+
+            const text = "This is the Web Speech API - it sounds robotic and mechanical compared to ElevenLabs.";
+            const utterance = new SpeechSynthesisUtterance(text);
+            utterance.rate = 1.0;
+            utterance.pitch = 1.0;
+            utterance.volume = 0.8;
+
+            speechSynthesis.speak(utterance);
+        }
+
+        function stopVoice() {
+            if (voiceManager) {
+                voiceManager.stop();
+            }
+            if ('speechSynthesis' in window) {
+                speechSynthesis.cancel();
+            }
+        }
+
+        function showApiKeyInstructions() {
+            document.getElementById('api-instructions').style.display = 'block';
+        }
+
+        function optimizeWebSpeech() {
+            alert('Web Speech optimization coming soon! For now, I recommend getting the ElevenLabs API key for the best results.');
+        }
+    </script>
+</body>
+
+</html>

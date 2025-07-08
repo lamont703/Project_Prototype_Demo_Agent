@@ -416,13 +416,13 @@ class AIAssistant {
         this.demoState.currentStep = 0;
         this.demoState.totalSteps = this.tourSteps.length;
         
-        this.updateVoiceStatus('Starting Voice Tour', 'Beginning interactive product tour');
-        this.setVoiceFace('🎯');
+        this.updateVoiceStatus('Starting Jahmal\'s Comedy Tour', 'Get ready for entertainment!');
+        this.setVoiceFace('🎭');
         
         // Show the demo cursor
         this.showDemoCursor();
         
-        await this.speak("Welcome to our interactive product tour! I'll guide you through all the key features with visual highlights and explanations. Let's begin!");
+        await this.speak("Yo, what's up! Welcome to Jahmal's Comedy Product Tour! I'm about to take you on the most entertaining journey through our platform. Think of this as a guided tour, but with actual personality and way more laughs. Ready to have some fun while learning about amazing features?");
         
         // Minimize assistant for unobstructed demo viewing
         setTimeout(() => {
@@ -546,23 +546,23 @@ class AIAssistant {
         this.hideDemoCursor();
         this.clearCursorTrails();
         
-        this.updateVoiceStatus('Tour Complete!', 'Amazing demo experience finished!');
+        this.updateVoiceStatus('Comedy Tour Complete!', 'That was entertaining AF!');
         this.setVoiceFace('🎉');
         
         // Keep the assistant minimized for a clean completion
         if (this.assistantOverlay && this.assistantOverlay.classList.contains('minimized')) {
-            await this.speak("Congratulations! You've completed the full product tour. Tap me to explore more features!");
+            await this.speak("And THAT, my friend, is how we do product demos in 2025! *mic drop* You just experienced the most entertaining product tour ever created. I hope you had as much fun as I did! Tap me if you want to explore more features or have questions!");
             
             setTimeout(() => {
-                this.updateVoiceStatus('Demo Complete', 'Tap to explore more');
-                this.setVoiceFace('✨');
+                this.updateVoiceStatus('Jahmal\'s Ready for More!', 'That was just the warm-up!');
+                this.setVoiceFace('🎭');
             }, 3000);
         } else {
-            await this.speak("Congratulations! You've completed the full product tour. Would you like to explore more features or ask me any questions?");
+            await this.speak("Congratulations! You just completed Jahmal's Comedy Product Tour! *applause* That was way more fun than your average demo, right? Want to explore more features, ask me questions, or just chat about how awesome this platform is?");
             
             setTimeout(() => {
-                this.updateVoiceStatus('AI Assistant Ready', 'Choose another experience or ask questions');
-                this.setVoiceFace('🤖');
+                this.updateVoiceStatus('Comedy Master Ready', 'Choose another experience or ask anything!');
+                this.setVoiceFace('🎤');
             }, 3000);
         }
     }
@@ -576,8 +576,8 @@ class AIAssistant {
 
         this.currentDemo = 'demo';
         this.demoState.isRunning = true;
-        this.updateVoiceStatus('Voice Demo Active', 'Interactive product presentation');
-        this.setVoiceFace('🎙️');
+        this.updateVoiceStatus('Jahmal\'s Comedy Demo Active', 'Get ready for entertainment!');
+        this.setVoiceFace('🎭');
         
         // Show the demo cursor
         this.showDemoCursor();
@@ -589,14 +589,89 @@ class AIAssistant {
         
         try {
             if (typeof VOICE_DEMO_SCRIPT !== 'undefined') {
-                const script = VOICE_DEMO_SCRIPT.conversation;
-                await this.runVoiceDemo(script);
+                // Create comedy conversation flow from Jahmal's scripts
+                const comedyConversation = [
+                    {
+                        title: "Jahmal's Comedy Welcome",
+                        content: VOICE_DEMO_SCRIPT.welcome.greeting,
+                        highlight: ".hero",
+                        pause: 1000
+                    },
+                    {
+                        title: "Hero Section Comedy",
+                        content: VOICE_DEMO_SCRIPT.demoFlow.heroSection.primary,
+                        highlight: ".hero-content",
+                        pause: 800
+                    },
+                    {
+                        title: "CTA Button Humor",
+                        content: VOICE_DEMO_SCRIPT.demoFlow.heroSection.callToAction,
+                        highlight: ".cta-button",
+                        pause: 1200
+                    },
+                    {
+                        title: "Features Comedy",
+                        content: VOICE_DEMO_SCRIPT.demoFlow.featuresSection.transition,
+                        highlight: "#features",
+                        pause: 1000
+                    },
+                    {
+                        title: "Performance Feature Comedy",
+                        content: VOICE_DEMO_SCRIPT.demoFlow.featuresSection.performanceFeature,
+                        highlight: ".feature-card:first-child",
+                        pause: 1500
+                    },
+                    {
+                        title: "AI Feature Comedy",
+                        content: VOICE_DEMO_SCRIPT.demoFlow.featuresSection.aiPoweredFeature,
+                        highlight: ".feature-card:nth-child(2)",
+                        pause: 1200
+                    },
+                    {
+                        title: "Security Feature Comedy",
+                        content: VOICE_DEMO_SCRIPT.demoFlow.featuresSection.securityFeature,
+                        highlight: ".feature-card:last-child",
+                        pause: 1000
+                    },
+                    {
+                        title: "Demo Section Comedy",
+                        content: VOICE_DEMO_SCRIPT.demoFlow.demoSection.introduction,
+                        highlight: "#demo-section",
+                        pause: 800
+                    },
+                    {
+                        title: "Interactive Demo Comedy",
+                        content: VOICE_DEMO_SCRIPT.demoFlow.demoSection.interactiveElement,
+                        highlight: ".demo-interface",
+                        pause: 1200
+                    },
+                    {
+                        title: "Pricing Comedy",
+                        content: VOICE_DEMO_SCRIPT.demoFlow.pricingSection.transparency,
+                        highlight: "#pricing",
+                        pause: 1000
+                    },
+                    {
+                        title: "Professional Plan Comedy",
+                        content: VOICE_DEMO_SCRIPT.demoFlow.pricingSection.professionalPlan,
+                        highlight: ".pricing-card.featured",
+                        pause: 1500
+                    },
+                    {
+                        title: "Comedy Closing",
+                        content: VOICE_DEMO_SCRIPT.closing.valueProposition,
+                        highlight: "#contact",
+                        pause: 1000
+                    }
+                ];
+                
+                await this.runVoiceDemo(comedyConversation);
             } else {
-                await this.speak("Welcome to our AI-powered product demo! I'll show you how our platform can transform your business with intelligent automation and insights.");
+                await this.speak("Yo, what's up! I'm Jahmal, and I'm about to show you the most entertaining product demo you've ever seen!");
             }
         } catch (error) {
-            console.error('Error starting voice demo:', error);
-            await this.speak("I'm ready to demonstrate our product features. What would you like to learn about?");
+            console.error('Error starting Jahmal\'s comedy demo:', error);
+            await this.speak("Hey there! I'm Jahmal, your comedy AI assistant, and I'm ready to make this demo way more fun than your average presentation!");
         }
     }
 
@@ -649,8 +724,8 @@ class AIAssistant {
 
         this.currentDemo = 'dashboard';
         this.demoState.isRunning = true;
-        this.updateVoiceStatus('Dashboard Demo', 'Navigating to dashboard...');
-        this.setVoiceFace('📊');
+        this.updateVoiceStatus('Jahmal\'s Funny Dashboard Demo', 'Dashboard comedy incoming!');
+        this.setVoiceFace('😂');
         
         // Show the demo cursor
         this.showDemoCursor();
@@ -660,7 +735,7 @@ class AIAssistant {
             this.minimizeAssistant();
         }, 1500);
         
-        await this.speak("Let me show you our powerful dashboard interface. I'll navigate to the dashboard and explain each component.");
+        await this.speak("Alright, let me show you something that's gonna make you say 'wow' out loud! I'm taking you to our actual dashboard interface. This is where the magic happens on a day-to-day basis, where the rubber meets the road, where... okay, I'll stop with the metaphors! Let's check out this beautiful dashboard!");
         
         // Navigate to dashboard page
         if (this.shouldNavigateToPage('product-dashboard.html')) {
@@ -676,19 +751,19 @@ class AIAssistant {
         }
 
         this.currentDemo = 'qa';
-        this.updateVoiceStatus('Q&A Mode', 'Ask me anything about our product');
-        this.setVoiceFace('❓');
+        this.updateVoiceStatus('Jahmal\'s Comedy Q&A', 'Ask me anything - I\'ve got jokes!');
+        this.setVoiceFace('🤔');
         
         // Minimize assistant for focused Q&A experience
         setTimeout(() => {
             this.minimizeAssistant();
         }, 2500);
         
-        await this.speak("I'm ready to answer your questions! You can ask me about pricing, features, integrations, security, or anything else about our product.");
+        await this.speak("Yo, I'm ready to answer your questions! And trust me, I'm way more fun than those boring FAQ pages. You can ask me about pricing, features, integrations, security, or literally anything else about our product. I promise to keep it entertaining while being helpful!");
         
         // Show common questions
         setTimeout(() => {
-            this.updateVoiceStatus('Q&A Ready', 'Try asking: "What about pricing?" or "How does it integrate?"');
+            this.updateVoiceStatus('Comedy Q&A Ready', 'Try: "What about pricing?" or "How secure is it?" I\'ve got hilarious answers!');
         }, 2000);
     }
 
@@ -780,16 +855,22 @@ class AIAssistant {
     }
 
     async testVoice() {
-        if (!this.voiceEnabled || !this.voiceManager) {
-            this.updateVoiceStatus('Voice Test Failed', 'Voice features are not available');
+        if (!this.voiceEnabled) {
+            this.updateVoiceStatus('Voice Unavailable', 'Voice features are not available');
             return;
         }
+
+        this.updateVoiceStatus('Testing Jahmal\'s Comedy Voice', 'Sample comedy performance!');
+        this.setVoiceFace('🎤');
         
-        this.updateVoiceStatus('Testing Voice', 'Playing voice sample...');
-        await this.speak("Hello! This is a test of the current voice settings. How does this sound?");
+        // Use a comedy test script
+        const comedyTest = "Hey there! This is Jahmal testing the voice quality, and I gotta say, I sound pretty amazing! *chuckles* This is what you'll hear during all our demos - natural, engaging, and way more fun than your average AI assistant. How's the sound quality? Pretty impressive, right?";
+        
+        await this.speak(comedyTest);
         
         setTimeout(() => {
-            this.updateVoiceStatus('Voice Test Complete', 'Voice settings are working correctly');
+            this.updateVoiceStatus('Comedy Voice Test Complete', 'Sounding good, right?');
+            this.setVoiceFace('🎭');
         }, 2000);
     }
 

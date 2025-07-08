@@ -1,0 +1,424 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Custom Voice ID Tester</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .container {
+            background: white;
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: 0 15px 30px rgba(0,0,0,0.1);
+            max-width: 600px;
+            width: 100%;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .header h1 {
+            color: #333;
+            font-size: 2.2em;
+            margin-bottom: 10px;
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .header p {
+            color: #666;
+            font-size: 1.1em;
+            line-height: 1.6;
+        }
+
+        .form-group {
+            margin-bottom: 25px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            color: #333;
+            font-weight: 500;
+            font-size: 1.1em;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 12px 16px;
+            border: 2px solid #e9ecef;
+            border-radius: 8px;
+            font-size: 1em;
+            transition: border-color 0.3s;
+        }
+
+        .form-group input:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+
+        .form-group small {
+            color: #666;
+            font-size: 0.9em;
+            margin-top: 5px;
+            display: block;
+        }
+
+        .test-btn {
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 1em;
+            font-weight: 500;
+            transition: all 0.3s;
+            width: 100%;
+            margin: 10px 0;
+        }
+
+        .test-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+        }
+
+        .test-btn:active {
+            transform: translateY(0);
+        }
+
+        .test-btn:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .test-btn.secondary {
+            background: #f8f9fa;
+            color: #333;
+            border: 2px solid #e9ecef;
+        }
+
+        .test-btn.secondary:hover {
+            background: #e9ecef;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+        }
+
+        .status {
+            padding: 15px;
+            border-radius: 8px;
+            margin: 20px 0;
+            font-weight: 500;
+            text-align: center;
+        }
+
+        .status.success {
+            background: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+
+        .status.error {
+            background: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+
+        .status.info {
+            background: #d1ecf1;
+            color: #0c5460;
+            border: 1px solid #bee5eb;
+        }
+
+        .status.warning {
+            background: #fff3cd;
+            color: #856404;
+            border: 1px solid #ffeaa7;
+        }
+
+        .instructions {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 12px;
+            margin-bottom: 30px;
+            border-left: 4px solid #667eea;
+        }
+
+        .instructions h3 {
+            color: #333;
+            margin-bottom: 15px;
+        }
+
+        .instructions ol {
+            color: #555;
+            line-height: 1.6;
+        }
+
+        .instructions li {
+            margin-bottom: 8px;
+        }
+
+        .voice-info {
+            background: #e8f5e8;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 15px 0;
+            border: 1px solid #4caf50;
+        }
+
+        .voice-info h4 {
+            color: #2e7d32;
+            margin-bottom: 10px;
+        }
+
+        .voice-info p {
+            color: #2e7d32;
+            margin: 5px 0;
+        }
+
+        .buttons-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        @media (max-width: 600px) {
+            .buttons-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .container {
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🎤 Custom Voice ID Tester</h1>
+            <p>Test your ElevenLabs voice ID before integrating it with Keisha</p>
+        </div>
+
+        <div class="instructions">
+            <h3>📝 How to Use:</h3>
+            <ol>
+                <li>Get your voice ID from ElevenLabs (from your voice library or voice cloning)</li>
+                <li>Paste it in the field below</li>
+                <li>Click "Test Voice ID" to hear how it sounds</li>
+                <li>If you like it, click "Apply to Keisha" to make it permanent</li>
+            </ol>
+        </div>
+
+        <div class="form-group">
+            <label for="voiceId">ElevenLabs Voice ID:</label>
+            <input type="text" id="voiceId" placeholder="e.g., abc123defg456hijkl789" />
+            <small>Paste your ElevenLabs voice ID here (usually 20-25 characters)</small>
+        </div>
+
+        <div class="form-group">
+            <label for="voiceName">Voice Name (optional):</label>
+            <input type="text" id="voiceName" placeholder="e.g., Keisha's New Voice" />
+            <small>Give your voice a custom name for identification</small>
+        </div>
+
+        <div class="form-group">
+            <label for="testText">Test Message:</label>
+            <input type="text" id="testText" value="Hey there! I'm Keisha, and girl, do I have some amazing stuff to show you today!" />
+            <small>Customize what Keisha says during the test</small>
+        </div>
+
+        <div class="buttons-grid">
+            <button class="test-btn secondary" onclick="getVoiceInfo()">📋 Get Voice Info</button>
+            <button class="test-btn" onclick="testVoice()">🧪 Test Voice ID</button>
+        </div>
+
+        <div id="status" class="status info" style="display: none;">
+            Ready to test your voice ID!
+        </div>
+
+        <div id="voiceInfo" style="display: none;"></div>
+
+        <div class="buttons-grid">
+            <button class="test-btn secondary" onclick="showCurrentConfig()">🔍 Show Current Config</button>
+            <button class="test-btn" onclick="applyToKeisha()" id="applyBtn" disabled>✅ Apply to Keisha</button>
+        </div>
+
+        <div style="margin-top: 30px; text-align: center;">
+            <p style="color: #666; font-size: 0.9em;">
+                💡 <strong>Tip:</strong> You can find voice IDs in your ElevenLabs dashboard under "Voice Library" or when you create a voice clone.
+            </p>
+        </div>
+    </div>
+
+    <script src="config-simple.js"></script>
+    <script src="voice-config.js"></script>
+    <script src="add-custom-voice.js"></script>
+    <script>
+        let testedVoiceId = null;
+        let testedVoiceName = null;
+
+        function updateStatus(message, type = 'info') {
+            const statusEl = document.getElementById('status');
+            statusEl.textContent = message;
+            statusEl.className = `status ${type}`;
+            statusEl.style.display = 'block';
+        }
+
+        function clearStatus() {
+            const statusEl = document.getElementById('status');
+            statusEl.style.display = 'none';
+        }
+
+        async function testVoice() {
+            const voiceId = document.getElementById('voiceId').value.trim();
+            const testText = document.getElementById('testText').value.trim();
+            
+            if (!voiceId) {
+                updateStatus('❌ Please enter a voice ID', 'error');
+                return;
+            }
+            
+            if (!testText) {
+                updateStatus('❌ Please enter test text', 'error');
+                return;
+            }
+            
+            updateStatus('🧪 Testing voice ID...', 'info');
+            
+            try {
+                const success = await testVoiceId(voiceId, testText);
+                
+                if (success) {
+                    updateStatus('✅ Voice test successful! How did it sound?', 'success');
+                    testedVoiceId = voiceId;
+                    testedVoiceName = document.getElementById('voiceName').value.trim() || 'Custom Keisha Voice';
+                    document.getElementById('applyBtn').disabled = false;
+                } else {
+                    updateStatus('❌ Voice test failed. Check your voice ID and API key.', 'error');
+                    testedVoiceId = null;
+                    document.getElementById('applyBtn').disabled = true;
+                }
+            } catch (error) {
+                updateStatus(`❌ Error testing voice: ${error.message}`, 'error');
+                testedVoiceId = null;
+                document.getElementById('applyBtn').disabled = true;
+            }
+        }
+
+        async function getVoiceInfo() {
+            const voiceId = document.getElementById('voiceId').value.trim();
+            
+            if (!voiceId) {
+                updateStatus('❌ Please enter a voice ID', 'error');
+                return;
+            }
+            
+            updateStatus('📋 Getting voice information...', 'info');
+            
+            try {
+                const voiceInfo = await getVoiceInfo(voiceId);
+                
+                if (voiceInfo) {
+                    const infoDiv = document.getElementById('voiceInfo');
+                    infoDiv.innerHTML = `
+                        <div class="voice-info">
+                            <h4>🎤 Voice Information</h4>
+                            <p><strong>Name:</strong> ${voiceInfo.name}</p>
+                            <p><strong>Category:</strong> ${voiceInfo.category}</p>
+                            <p><strong>Labels:</strong> ${voiceInfo.labels ? Object.entries(voiceInfo.labels).map(([k,v]) => `${k}: ${v}`).join(', ') : 'None'}</p>
+                            <p><strong>Voice ID:</strong> ${voiceInfo.voice_id}</p>
+                        </div>
+                    `;
+                    infoDiv.style.display = 'block';
+                    updateStatus('✅ Voice information retrieved successfully!', 'success');
+                } else {
+                    updateStatus('❌ Failed to get voice information. Check your voice ID and API key.', 'error');
+                }
+            } catch (error) {
+                updateStatus(`❌ Error getting voice info: ${error.message}`, 'error');
+            }
+        }
+
+        function applyToKeisha() {
+            if (!testedVoiceId) {
+                updateStatus('❌ Please test a voice ID first', 'error');
+                return;
+            }
+            
+            const success = addCustomVoiceId(testedVoiceId, testedVoiceName);
+            
+            if (success) {
+                updateStatus(`✅ Success! Keisha now uses voice ID: ${testedVoiceId}`, 'success');
+                
+                // Show instructions for permanent integration
+                const instructions = `
+                    <div class="voice-info">
+                        <h4>🎯 To Make This Permanent:</h4>
+                        <p>1. Open <strong>config-simple.js</strong></p>
+                        <p>2. Find the 'keisha' section in VOICE_CHARACTERS</p>
+                        <p>3. Replace the id with: <strong>${testedVoiceId}</strong></p>
+                        <p>4. Save the file</p>
+                        <p style="margin-top: 10px;"><em>The voice is now active for this session!</em></p>
+                    </div>
+                `;
+                
+                document.getElementById('voiceInfo').innerHTML = instructions;
+                document.getElementById('voiceInfo').style.display = 'block';
+            } else {
+                updateStatus('❌ Failed to apply voice to Keisha', 'error');
+            }
+        }
+
+        function showCurrentConfig() {
+            const currentVoice = CONFIG.VOICE_CHARACTERS[CONFIG.DEFAULT_VOICE];
+            
+            const configDiv = document.getElementById('voiceInfo');
+            configDiv.innerHTML = `
+                <div class="voice-info">
+                    <h4>🔧 Current Keisha Configuration</h4>
+                    <p><strong>Name:</strong> ${currentVoice.name}</p>
+                    <p><strong>Voice ID:</strong> ${currentVoice.id}</p>
+                    <p><strong>Description:</strong> ${currentVoice.description}</p>
+                    <p><strong>Personality:</strong> ${currentVoice.personality}</p>
+                    <p><strong>Age:</strong> ${currentVoice.age || 'Not specified'}</p>
+                    <p><strong>Style:</strong> ${currentVoice.style || 'Not specified'}</p>
+                </div>
+            `;
+            configDiv.style.display = 'block';
+            updateStatus('✅ Current configuration displayed', 'success');
+        }
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', function() {
+            // Check API key
+            if (!CONFIG.ELEVENLABS_API_KEY || CONFIG.ELEVENLABS_API_KEY === 'your_elevenlabs_api_key_here') {
+                updateStatus('⚠️ Warning: ElevenLabs API key not configured. Voice testing will fail.', 'warning');
+            } else {
+                updateStatus('✅ ElevenLabs API key configured. Ready to test voices!', 'success');
+            }
+        });
+    </script>
+</body>
+</html> 

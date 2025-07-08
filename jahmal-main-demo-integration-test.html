@@ -1,0 +1,541 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🎭 Jahmal's Main Demo Integration - TikTok Ready!</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .test-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 15px 30px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+
+        .test-header {
+            background: linear-gradient(135deg, #ff6b6b 0%, #feca57 100%);
+            color: white;
+            padding: 40px;
+            text-align: center;
+        }
+
+        .test-header h1 {
+            font-size: 2.5em;
+            margin-bottom: 15px;
+            animation: bounceIn 1s ease-out;
+        }
+
+        .test-header p {
+            font-size: 1.2em;
+            opacity: 0.9;
+        }
+
+        .test-content {
+            padding: 40px;
+        }
+
+        .integration-status {
+            background: #e8f5e8;
+            border: 2px solid #4caf50;
+            border-radius: 15px;
+            padding: 25px;
+            margin-bottom: 30px;
+            text-align: center;
+        }
+
+        .integration-status h2 {
+            color: #2e7d32;
+            margin-bottom: 10px;
+            font-size: 1.5em;
+        }
+
+        .integration-status p {
+            color: #2e7d32;
+            font-size: 1.1em;
+            line-height: 1.5;
+        }
+
+        .demo-tests {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 25px;
+            margin-bottom: 30px;
+        }
+
+        .test-card {
+            background: #f8f9fa;
+            border-radius: 15px;
+            padding: 25px;
+            border-left: 4px solid #ff6b6b;
+            transition: all 0.3s ease;
+        }
+
+        .test-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+        }
+
+        .test-card h3 {
+            color: #333;
+            margin-bottom: 15px;
+            font-size: 1.2em;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .test-card .demo-preview {
+            background: #fff;
+            padding: 15px;
+            border-radius: 10px;
+            font-style: italic;
+            color: #555;
+            margin: 15px 0;
+            border-left: 3px solid #ff6b6b;
+        }
+
+        .test-btn {
+            background: linear-gradient(45deg, #ff6b6b, #feca57);
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 1em;
+            transition: all 0.3s;
+            width: 100%;
+        }
+
+        .test-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(255, 107, 107, 0.4);
+        }
+
+        .test-btn:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .tiktok-ready {
+            background: linear-gradient(135deg, #ff0050 0%, #ff4040 100%);
+            color: white;
+            padding: 30px;
+            border-radius: 15px;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .tiktok-ready h2 {
+            font-size: 2em;
+            margin-bottom: 15px;
+        }
+
+        .tiktok-ready p {
+            font-size: 1.1em;
+            opacity: 0.9;
+            margin-bottom: 20px;
+        }
+
+        .tiktok-features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .tiktok-feature {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 15px;
+            border-radius: 10px;
+            text-align: center;
+            backdrop-filter: blur(10px);
+        }
+
+        .tiktok-feature h4 {
+            margin-bottom: 10px;
+            font-size: 1.1em;
+        }
+
+        .tiktok-feature p {
+            font-size: 0.9em;
+            opacity: 0.9;
+        }
+
+        .main-demo-link {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 30px;
+            border-radius: 15px;
+            text-align: center;
+        }
+
+        .main-demo-link h2 {
+            font-size: 1.8em;
+            margin-bottom: 15px;
+        }
+
+        .main-demo-link p {
+            font-size: 1.1em;
+            margin-bottom: 20px;
+            opacity: 0.9;
+        }
+
+        .demo-link-btn {
+            background: #ff6b6b;
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 1.2em;
+            text-decoration: none;
+            display: inline-block;
+            transition: all 0.3s;
+            margin: 5px;
+        }
+
+        .demo-link-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(255, 107, 107, 0.4);
+        }
+
+        @keyframes bounceIn {
+            from {
+                opacity: 0;
+                transform: scale(0.3);
+            }
+            50% {
+                opacity: 1;
+                transform: scale(1.05);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        .voice-status {
+            text-align: center;
+            padding: 20px;
+            border-radius: 12px;
+            margin-bottom: 20px;
+            font-weight: 500;
+            background: #e8f5e8;
+            border: 2px solid #4caf50;
+            color: #2e7d32;
+        }
+
+        .voice-status.speaking {
+            background: #fff3e0;
+            border-color: #ff9800;
+            color: #f57f17;
+        }
+
+        .voice-status.error {
+            background: #ffeaa7;
+            border-color: #fdcb6e;
+            color: #856404;
+        }
+
+        .api-info {
+            background: #fff3cd;
+            padding: 20px;
+            border-radius: 12px;
+            border: 2px solid #ffeaa7;
+            margin-bottom: 20px;
+        }
+
+        .api-info h3 {
+            color: #856404;
+            margin-bottom: 10px;
+        }
+
+        .api-info p {
+            color: #856404;
+            line-height: 1.5;
+        }
+    </style>
+</head>
+<body>
+    <div class="test-container">
+        <div class="test-header">
+            <h1>🎭 Jahmal's Main Demo Integration Complete!</h1>
+            <p>Your product demo is now TikTok-ready with hilarious comedy throughout!</p>
+        </div>
+
+        <div class="test-content">
+            <div class="integration-status">
+                <h2>✅ Integration Status: COMEDY ACTIVATED!</h2>
+                <p>Jahmal's comedy personality is now fully integrated into your main product demo. Every interaction, every tour step, and every demo script now uses his entertaining style instead of boring corporate speak!</p>
+            </div>
+
+            <div class="api-info">
+                <h3>🔑 API Configuration</h3>
+                <p id="apiStatus">Checking ElevenLabs API key...</p>
+            </div>
+
+            <div class="voice-status" id="voiceStatus">
+                Ready to test the comedy integration! 🎭
+            </div>
+
+            <div class="tiktok-ready">
+                <h2>🎬 TikTok Ready Features</h2>
+                <p>Your demo now has everything needed for viral TikTok content:</p>
+                <div class="tiktok-features">
+                    <div class="tiktok-feature">
+                        <h4>😂 Comedy Scripts</h4>
+                        <p>Hilarious jokes and timing throughout</p>
+                    </div>
+                    <div class="tiktok-feature">
+                        <h4>🎭 Personality</h4>
+                        <p>Engaging character that viewers love</p>
+                    </div>
+                    <div class="tiktok-feature">
+                        <h4>📱 Mobile Optimized</h4>
+                        <p>Perfect for mobile viewing</p>
+                    </div>
+                    <div class="tiktok-feature">
+                        <h4>⚡ Quick Pacing</h4>
+                        <p>Fast, engaging content flow</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="demo-tests">
+                <div class="test-card">
+                    <h3>🎤 Comedy Welcome Test</h3>
+                    <div class="demo-preview">
+                        "Yo, what's up! Welcome to our product demo! I'm Jahmal, your AI-powered product guide, and listen... I promise this demo is gonna be way more entertaining than that last Zoom meeting you fell asleep in!"
+                    </div>
+                    <button class="test-btn" onclick="testComedy('welcome')">🎭 Test Comedy Welcome</button>
+                </div>
+
+                <div class="test-card">
+                    <h3>🎯 Tour Step Comedy</h3>
+                    <div class="demo-preview">
+                        "Check out this dashboard preview! This isn't just a pretty picture to look at - it's like a movie trailer but for software! We're giving you a sneak peek so you know exactly what you're getting into!"
+                    </div>
+                    <button class="test-btn" onclick="testComedy('tour')">🎪 Test Tour Comedy</button>
+                </div>
+
+                <div class="test-card">
+                    <h3>💰 Pricing Comedy</h3>
+                    <div class="demo-preview">
+                        "Let's talk pricing, and I'm gonna be straight with you - no hidden fees, no surprise charges, no 'contact us for pricing' nonsense that makes you feel like you're buying a car!"
+                    </div>
+                    <button class="test-btn" onclick="testComedy('pricing')">💸 Test Pricing Comedy</button>
+                </div>
+
+                <div class="test-card">
+                    <h3>🔥 Features Comedy</h3>
+                    <div class="demo-preview">
+                        "Now let's talk features! But hold up - I'm not gonna stand here and read you a boring list like I'm taking attendance. I'm gonna show you why each feature is about to change your life!"
+                    </div>
+                    <button class="test-btn" onclick="testComedy('features')">🚀 Test Features Comedy</button>
+                </div>
+
+                <div class="test-card">
+                    <h3>🎉 Completion Comedy</h3>
+                    <div class="demo-preview">
+                        "And THAT, my friend, is how we do product demos in 2025! *mic drop* You just experienced the most entertaining product tour ever created!"
+                    </div>
+                    <button class="test-btn" onclick="testComedy('completion')">🎊 Test Completion Comedy</button>
+                </div>
+
+                <div class="test-card">
+                    <h3>🎲 Random Comedy</h3>
+                    <div class="demo-preview">
+                        Test random comedy lines from throughout the demo to see the variety and entertainment value that's now built into every interaction!
+                    </div>
+                    <button class="test-btn" onclick="testRandomComedy()">🎰 Random Comedy Test</button>
+                </div>
+            </div>
+
+            <div class="main-demo-link">
+                <h2>🎬 Ready to Experience the Comedy Demo?</h2>
+                <p>Your main demo is now fully equipped with Jahmal's comedy personality. Perfect for TikTok content, social media, and engaging any audience!</p>
+                <a href="index.html" class="demo-link-btn">🎭 Go to Main Demo</a>
+                <a href="jahmal-comedy-demo.html" class="demo-link-btn">🎪 Comedy Showcase</a>
+                <a href="jahmal-voice-test.html" class="demo-link-btn">🎤 Voice Tests</a>
+            </div>
+        </div>
+    </div>
+
+    <script src="config-simple.js"></script>
+    <script src="voice-config.js"></script>
+    <script src="jahmal-demo-scripts.js"></script>
+    <script src="voice-demo-script.js"></script>
+    <script>
+        let currentAudio = null;
+        let isPlaying = false;
+
+        // Comedy test scripts
+        const COMEDY_TESTS = {
+            welcome: "Yo, what's up! Welcome to our product demo! I'm Jahmal, your AI-powered product guide, and listen... I promise this demo is gonna be way more entertaining than that last Zoom meeting you fell asleep in! *laughs* Don't worry, I saw nothing!",
+            tour: "Check out this dashboard preview! This isn't just a pretty picture to look at - it's like a movie trailer but for software! We're giving you a sneak peek so you know exactly what you're getting into. No surprises, no 'wait, this looks nothing like what I expected' moments!",
+            pricing: "Let's talk pricing, and I'm gonna be straight with you - no hidden fees, no surprise charges, no 'contact us for pricing' nonsense that makes you feel like you're buying a car. Here's exactly what everything costs, clear as day!",
+            features: "Now let's talk features! But hold up - I'm not gonna stand here and read you a boring list like I'm taking attendance. I'm gonna show you why each feature is about to change your life. Well, your work life at least!",
+            completion: "And THAT, my friend, is how we do product demos in 2025! *mic drop* You just experienced the most entertaining product tour ever created. I hope you had as much fun as I did! Ready for more comedy gold?"
+        };
+
+        // Initialize page
+        document.addEventListener('DOMContentLoaded', function() {
+            checkApiKey();
+        });
+
+        function checkApiKey() {
+            const apiKey = CONFIG.ELEVENLABS_API_KEY;
+            const statusElement = document.getElementById('apiStatus');
+            
+            if (!apiKey || apiKey === 'your_elevenlabs_api_key_here') {
+                statusElement.innerHTML = '⚠️ <strong>API Key Missing:</strong> Using Web Speech API (robotic). Add your ElevenLabs API key for natural comedy delivery!';
+                statusElement.parentElement.style.background = '#ffeaa7';
+                statusElement.parentElement.style.borderColor = '#fdcb6e';
+            } else {
+                statusElement.innerHTML = '✅ <strong>ElevenLabs API Key Active:</strong> Ready for natural comedy delivery with perfect timing!';
+                statusElement.parentElement.style.background = '#d4edda';
+                statusElement.parentElement.style.borderColor = '#4caf50';
+            }
+        }
+
+        function updateStatus(message, type = 'info') {
+            const statusElement = document.getElementById('voiceStatus');
+            statusElement.textContent = message;
+            statusElement.className = `voice-status ${type}`;
+        }
+
+        function testComedy(type) {
+            const script = COMEDY_TESTS[type];
+            updateStatus(`🎭 Testing ${type} comedy integration...`, 'speaking');
+            playVoice(script, 'jahmal');
+        }
+
+        function testRandomComedy() {
+            const types = Object.keys(COMEDY_TESTS);
+            const randomType = types[Math.floor(Math.random() * types.length)];
+            const script = COMEDY_TESTS[randomType];
+            updateStatus(`🎲 Random comedy test: ${randomType}`, 'speaking');
+            playVoice(script, 'jahmal');
+        }
+
+        async function playVoice(text, voiceCharacter = 'jahmal') {
+            if (isPlaying) {
+                updateStatus('⏹️ Stopping current comedy performance...', 'info');
+                if (currentAudio) {
+                    currentAudio.pause();
+                    currentAudio = null;
+                }
+                isPlaying = false;
+                return;
+            }
+
+            const buttons = document.querySelectorAll('.test-btn');
+            buttons.forEach(btn => btn.disabled = true);
+
+            isPlaying = true;
+
+            try {
+                const voice = getVoiceCharacter(voiceCharacter);
+                const apiKey = CONFIG.ELEVENLABS_API_KEY;
+
+                if (!apiKey || apiKey === 'your_elevenlabs_api_key_here') {
+                    // Fallback to Web Speech API
+                    const utterance = new SpeechSynthesisUtterance(text);
+                    utterance.rate = 1.0;
+                    utterance.volume = 0.8;
+                    utterance.voice = speechSynthesis.getVoices().find(v => v.name.includes('Male')) || speechSynthesis.getVoices()[0];
+                    
+                    utterance.onend = () => {
+                        updateStatus('✅ Comedy integration test complete!', 'info');
+                        isPlaying = false;
+                        buttons.forEach(btn => btn.disabled = false);
+                    };
+                    
+                    speechSynthesis.speak(utterance);
+                } else {
+                    // Use ElevenLabs API with comedy settings
+                    const comedySettings = {
+                        stability: 0.70,
+                        similarity_boost: 0.85,
+                        style: 0.30,
+                        use_speaker_boost: true
+                    };
+                    
+                    const response = await fetch(`${CONFIG.ELEVENLABS_API_URL}/${voice.id}`, {
+                        method: 'POST',
+                        headers: {
+                            'Accept': 'audio/mpeg',
+                            'Content-Type': 'application/json',
+                            'xi-api-key': apiKey
+                        },
+                        body: JSON.stringify({
+                            text: text,
+                            model_id: CONFIG.ELEVENLABS_MODEL_ID,
+                            voice_settings: comedySettings
+                        })
+                    });
+
+                    if (!response.ok) {
+                        throw new Error(`HTTP error! status: ${response.status}`);
+                    }
+
+                    const audioBlob = await response.blob();
+                    const audioUrl = URL.createObjectURL(audioBlob);
+                    
+                    currentAudio = new Audio(audioUrl);
+                    currentAudio.volume = 0.8;
+                    currentAudio.playbackRate = 1.0;
+                    
+                    currentAudio.onended = () => {
+                        updateStatus('🎭 Comedy integration working perfectly! TikTok ready! 🎉', 'info');
+                        isPlaying = false;
+                        buttons.forEach(btn => btn.disabled = false);
+                        URL.revokeObjectURL(audioUrl);
+                    };
+                    
+                    currentAudio.onerror = (error) => {
+                        updateStatus('❌ Error playing comedy test', 'error');
+                        isPlaying = false;
+                        buttons.forEach(btn => btn.disabled = false);
+                    };
+                    
+                    await currentAudio.play();
+                }
+            } catch (error) {
+                console.error('Comedy integration test error:', error);
+                updateStatus(`❌ Error: ${error.message}`, 'error');
+                isPlaying = false;
+                buttons.forEach(btn => btn.disabled = false);
+            }
+        }
+
+        // Helper function to get voice character
+        function getVoiceCharacter(characterName) {
+            return CONFIG.VOICE_CHARACTERS[characterName] || CONFIG.VOICE_CHARACTERS['jahmal'];
+        }
+
+        // Stop playback when page is unloaded
+        window.addEventListener('beforeunload', () => {
+            if (currentAudio) {
+                currentAudio.pause();
+            }
+        });
+    </script>
+</body>
+</html> 

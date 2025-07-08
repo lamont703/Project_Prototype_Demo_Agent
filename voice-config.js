@@ -5,20 +5,20 @@ const VOICE_CONFIG = {
     apiKey: getConfig('ELEVENLABS_API_KEY'),
     apiUrl: getConfig('ELEVENLABS_API_URL'),
     
-    // Voice Settings
-    voiceId: getVoiceCharacter(getConfig('DEFAULT_VOICE')).id,
+    // Voice Settings - Updated for more natural, human-like speech
+    voiceId: getVoiceCharacter('jahmal').id, // Changed to Jahmal - vibrant 30-year-old with personality
     
     // Alternative voice options (from environment)
     voices: Object.fromEntries(
         Object.entries(getConfig('VOICE_CHARACTERS')).map(([key, value]) => [key, value.id])
     ),
     
-    // Voice Parameters
+    // Voice Parameters - Optimized for Jahmal's conversational personality
     settings: {
-        stability: 0.75,        // Voice stability (0-1)
-        similarity_boost: 0.8,  // Voice similarity (0-1)
-        style: 0.3,            // Style exaggeration (0-1)
-        use_speaker_boost: true // Enhance speaker clarity
+        stability: 0.75,        // Balanced for natural variation with personality
+        similarity_boost: 0.85, // High for authentic delivery with character
+        style: 0.25,           // Moderate style for personality without overdoing it
+        use_speaker_boost: true // Enhanced speaker clarity for professional sound
     },
     
     // Playback Settings
@@ -275,6 +275,26 @@ class VoiceManager {
         // Last resort: use default voice
         return voices.find(v => v.default) || voices[0] || null;
     }
+
+    // Get ElevenLabs voice by personality type
+    getVoiceByPersonality(personality = 'professional') {
+        const characters = getConfig('VOICE_CHARACTERS');
+        const matchingVoice = Object.values(characters).find(voice => 
+            voice.personality === personality
+        );
+        return matchingVoice || characters[getConfig('DEFAULT_VOICE')];
+    }
+
+    // Switch to different voice personality
+    switchVoicePersonality(personality) {
+        const voice = this.getVoiceByPersonality(personality);
+        if (voice) {
+            this.currentVoice = voice.id;
+            if (getConfig('DEBUG_MODE')) {
+                console.log(`🎭 Switched to ${voice.name} (${voice.personality}): ${voice.description}`);
+            }
+        }
+    }
     
     async playAudio(audioUrl) {
         return new Promise((resolve, reject) => {
@@ -433,6 +453,103 @@ function isApiKeyConfigured() {
            apiKey !== 'your_elevenlabs_api_key_here' && 
            apiKey !== 'YOUR_ELEVENLABS_API_KEY_HERE' && 
            apiKey.trim() !== '';
+}
+
+// Helper function to get voice character info
+function getVoiceCharacter(characterName) {
+    return CONFIG.VOICE_CHARACTERS[characterName] || CONFIG.VOICE_CHARACTERS['keisha'];
+}
+
+// Function to switch to a specific voice character
+function switchToVoiceCharacter(characterName) {
+    const character = getVoiceCharacter(characterName);
+    if (character) {
+        VOICE_CONFIG.voiceId = character.id;
+        console.log(`Switched to voice character: ${character.name} (${character.description})`);
+        return character;
+    }
+    console.warn(`Voice character '${characterName}' not found. Using default.`);
+    return getVoiceCharacter('keisha');
+}
+
+// Function to get personality-appropriate voice settings
+function getPersonalityVoiceSettings(characterName = 'jahmal') {
+    const character = getVoiceCharacter(characterName);
+    
+    // Base settings
+    let settings = {
+        stability: VOICE_CONFIG.settings.stability,
+        similarity_boost: VOICE_CONFIG.settings.similarity_boost,
+        style: VOICE_CONFIG.settings.style,
+        use_speaker_boost: VOICE_CONFIG.settings.use_speaker_boost
+    };
+    
+    // Adjust settings based on character personality
+    if (character.personality === 'vibrant' || character.style === 'conversational_humor') {
+        // Keisha's settings for vibrant, conversational delivery
+        settings.stability = 0.75;        // Balanced for natural variation
+        settings.similarity_boost = 0.85; // High for authentic delivery
+        settings.style = 0.25;           // Moderate style for personality
+        settings.use_speaker_boost = true;
+    } else if (character.personality === 'confident' || character.style === 'urban_professional') {
+        // Nia's settings for confident, professional delivery
+        settings.stability = 0.8;         // Slightly higher stability
+        settings.similarity_boost = 0.9;  // Very high for clarity
+        settings.style = 0.2;            // Controlled style
+        settings.use_speaker_boost = true;
+    } else if (character.personality === 'warm') {
+        // Sarah's settings for warm, approachable delivery
+        settings.stability = 0.85;        // High stability
+        settings.similarity_boost = 0.9;  // High similarity
+        settings.style = 0.15;           // Subtle style
+        settings.use_speaker_boost = true;
+    }
+    
+    return settings;
+}
+
+// Function to get conversational scripts based on context
+function getConversationalScript(context, character = 'jahmal') {
+    if (typeof window !== 'undefined' && window.KEISHA_SCRIPTS && character === 'keisha') {
+        return window.getKeishaScript(context);
+    }
+    
+    // Fallback scripts for other characters or when Keisha scripts aren't available
+    const fallbackScripts = {
+        greeting: "Hello! I'm your AI assistant, and I'm excited to show you around today!",
+        feature_intro: "Let me show you this amazing feature that's going to make your life so much easier.",
+        explanation: "Here's how this works - it's actually pretty straightforward once you see it in action.",
+        encouragement: "You're going to love this! It's designed to be intuitive and powerful.",
+        cta: "Ready to get started? I think you'll find this incredibly useful!"
+    };
+    
+    return fallbackScripts[context] || fallbackScripts.greeting;
+}
+
+// Function to enhance text with personality markers
+function enhanceTextWithPersonality(text, character = 'jahmal') {
+    const characterInfo = getVoiceCharacter(character);
+    
+    if (characterInfo.style === 'conversational_humor') {
+        // Add natural conversational elements for Keisha
+        return text
+            .replace(/\bthis is\b/gi, 'this right here is')
+            .replace(/\bvery good\b/gi, 'absolutely amazing')
+            .replace(/\blet me show you\b/gi, 'check this out')
+            .replace(/\bawesome\b/gi, 'fire')
+            .replace(/\bgreat\b/gi, 'fantastic');
+    }
+    
+    return text;
+}
+
+// Export functions for use in other modules
+if (typeof window !== 'undefined') {
+    window.getVoiceCharacter = getVoiceCharacter;
+    window.switchToVoiceCharacter = switchToVoiceCharacter;
+    window.getPersonalityVoiceSettings = getPersonalityVoiceSettings;
+    window.getConversationalScript = getConversationalScript;
+    window.enhanceTextWithPersonality = enhanceTextWithPersonality;
 }
 
 // Export for use in other modules

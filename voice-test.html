@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Voice Quality Test - Human-like ElevenLabs Voices</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            color: #333;
+        }
+
+        .container {
+            background: white;
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            color: #4a5568;
+            text-align: center;
+            margin-bottom: 30px;
+            font-size: 2em;
+        }
+
+        .upgrade-info {
+            background: linear-gradient(135deg, #48bb78, #38a169);
+            color: white;
+            padding: 20px;
+            border-radius: 15px;
+            margin-bottom: 30px;
+        }
+
+        .upgrade-info h2 {
+            margin-top: 0;
+            font-size: 1.2em;
+        }
+
+        .upgrade-info ul {
+            margin-bottom: 0;
+        }
+
+        .voice-section {
+            margin-bottom: 30px;
+            padding: 20px;
+            border: 2px solid #e2e8f0;
+            border-radius: 15px;
+            background: #f8fafc;
+        }
+
+        .voice-section h3 {
+            color: #2d3748;
+            margin-top: 0;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .personality-badge {
+            background: #667eea;
+            color: white;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.8em;
+            font-weight: 500;
+        }
+
+        .test-button {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 1em;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            margin-right: 10px;
+            margin-bottom: 10px;
+        }
+
+        .test-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+        }
+
+        .test-button:active {
+            transform: translateY(0);
+        }
+
+        .test-button.playing {
+            background: #e53e3e;
+        }
+
+        .sample-text {
+            background: #edf2f7;
+            padding: 15px;
+            border-radius: 10px;
+            margin: 15px 0;
+            font-style: italic;
+            border-left: 4px solid #667eea;
+        }
+
+        .api-status {
+            padding: 15px;
+            border-radius: 10px;
+            margin: 20px 0;
+            font-weight: 500;
+        }
+
+        .api-status.success {
+            background: #c6f6d5;
+            color: #22543d;
+            border: 1px solid #9ae6b4;
+        }
+
+        .api-status.warning {
+            background: #fef5e7;
+            color: #744210;
+            border: 1px solid #f6e05e;
+        }
+
+        .control-panel {
+            background: #f7fafc;
+            padding: 20px;
+            border-radius: 15px;
+            margin-bottom: 30px;
+        }
+
+        .control-row {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 15px;
+        }
+
+        .control-row label {
+            min-width: 120px;
+            font-weight: 500;
+        }
+
+        .control-row input[type="range"] {
+            flex: 1;
+            height: 6px;
+            background: #e2e8f0;
+            border-radius: 3px;
+            outline: none;
+        }
+
+        .control-row input[type="range"]::-webkit-slider-thumb {
+            background: #667eea;
+            height: 18px;
+            width: 18px;
+            border-radius: 50%;
+            cursor: pointer;
+        }
+
+        .value-display {
+            min-width: 60px;
+            font-family: monospace;
+            font-weight: bold;
+            color: #667eea;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h1>🎙️ AI Voice Quality Test</h1>
+
+        <div class="upgrade-info">
+            <h2>🚀 Voice Upgraded to Human-like Quality!</h2>
+            <ul>
+                <li><strong>Model:</strong> ElevenLabs Multilingual v2 (latest generation)</li>
+                <li><strong>Quality:</strong> Professional, natural, conversational</li>
+                <li><strong>Voices:</strong> Multiple personalities available</li>
+                <li><strong>Optimization:</strong> Enhanced stability and clarity</li>
+            </ul>
+        </div>
+
+        <div id="api-status" class="api-status warning">
+            ⚠️ Checking ElevenLabs API configuration...
+        </div>
+
+        <div class="control-panel">
+            <h3>🎚️ Voice Controls</h3>
+            <div class="control-row">
+                <label>Volume:</label>
+                <input type="range" id="volume" min="0" max="1" step="0.1" value="0.8">
+                <span class="value-display" id="volume-value">0.8</span>
+            </div>
+            <div class="control-row">
+                <label>Speed:</label>
+                <input type="range" id="speed" min="0.5" max="2" step="0.1" value="1.0">
+                <span class="value-display" id="speed-value">1.0</span>
+            </div>
+            <div class="control-row">
+                <label>Stability:</label>
+                <input type="range" id="stability" min="0" max="1" step="0.05" value="0.85">
+                <span class="value-display" id="stability-value">0.85</span>
+            </div>
+        </div>
+
+        <div class="voice-section">
+            <h3>👩‍💼 Rachel <span class="personality-badge">Professional</span></h3>
+            <p>Calm, soothing voice perfect for AI assistants and professional applications.</p>
+            <div class="sample-text">
+                "Hello! I'm your AI assistant. I'm here to help guide you through our product demonstration. My voice
+                has been upgraded to sound more natural and human-like using ElevenLabs' latest technology."
+            </div>
+            <button class="test-button" onclick="testVoice('rachel', 'professional')">🎙️ Test Rachel</button>
+            <button class="test-button" onclick="testVoice('rachel', 'professional', 'short')">⚡ Quick Test</button>
+        </div>
+
+        <div class="voice-section">
+            <h3>👩‍🎨 Sarah <span class="personality-badge">Warm</span></h3>
+            <p>Warm and approachable voice ideal for customer-facing applications.</p>
+            <div class="sample-text">
+                "Welcome to our interactive demo! I'm Sarah, and I'm excited to show you what our AI can do. You'll
+                notice my voice sounds much more natural and engaging than before."
+            </div>
+            <button class="test-button" onclick="testVoice('sarah', 'professional')">🎙️ Test Sarah</button>
+            <button class="test-button" onclick="testVoice('sarah', 'professional', 'short')">⚡ Quick Test</button>
+        </div>
+
+        <div class="voice-section">
+            <h3>👩‍🎪 Elli <span class="personality-badge">Energetic</span></h3>
+            <p>Youthful and energetic voice great for dynamic presentations and tutorials.</p>
+            <div class="sample-text">
+                "Hey there! I'm Elli, and I'm super excited to walk you through this amazing demo! With my new voice
+                upgrade, I sound way more lively and natural. Let's get started!"
+            </div>
+            <button class="test-button" onclick="testVoice('elli', 'energetic')">🎙️ Test Elli</button>
+            <button class="test-button" onclick="testVoice('elli', 'energetic', 'short')">⚡ Quick Test</button>
+        </div>
+
+        <div class="voice-section">
+            <h3>🎭 Custom Test</h3>
+            <p>Test with your own text to hear the voice quality improvement:</p>
+            <textarea id="custom-text" placeholder="Enter your text here..."
+                style="width: 100%; height: 100px; padding: 10px; border: 1px solid #e2e8f0; border-radius: 10px; font-family: inherit; resize: vertical;"></textarea>
+            <br><br>
+            <button class="test-button" onclick="testCustomText()">🎙️ Test Custom Text</button>
+            <button class="test-button" onclick="stopVoice()">🛑 Stop Voice</button>
+        </div>
+    </div>
+
+    <script src="config-simple.js"></script>
+    <script src="voice-config.js"></script>
+    <script>
+        let voiceManager;
+        let currentButton = null;
+
+        // Initialize voice manager
+        document.addEventListener('DOMContentLoaded', async () => {
+            voiceManager = new VoiceManager();
+            checkApiStatus();
+            setupControls();
+        });
+
+        function checkApiStatus() {
+            const statusDiv = document.getElementById('api-status');
+            if (isApiKeyConfigured()) {
+                statusDiv.className = 'api-status success';
+                statusDiv.innerHTML = '✅ ElevenLabs API configured - Using high-quality human-like voices';
+            } else {
+                statusDiv.className = 'api-status warning';
+                statusDiv.innerHTML = '⚠️ ElevenLabs API not configured - Using Web Speech API fallback (less natural)';
+            }
+        }
+
+        function setupControls() {
+            const volumeSlider = document.getElementById('volume');
+            const speedSlider = document.getElementById('speed');
+            const stabilitySlider = document.getElementById('stability');
+
+            volumeSlider.addEventListener('input', (e) => {
+                const value = parseFloat(e.target.value);
+                document.getElementById('volume-value').textContent = value;
+                voiceManager.setVolume(value);
+            });
+
+            speedSlider.addEventListener('input', (e) => {
+                const value = parseFloat(e.target.value);
+                document.getElementById('speed-value').textContent = value;
+                voiceManager.setSpeed(value);
+            });
+
+            stabilitySlider.addEventListener('input', (e) => {
+                const value = parseFloat(e.target.value);
+                document.getElementById('stability-value').textContent = value;
+                // Update voice config stability
+                VOICE_CONFIG.settings.stability = value;
+            });
+        }
+
+        async function testVoice(voiceId, personality, length = 'full') {
+            const button = event.target;
+            const texts = {
+                'rachel': {
+                    'short': 'Hello, I\'m Rachel, your professional AI assistant.',
+                    'full': 'Hello! I\'m your AI assistant. I\'m here to help guide you through our product demonstration. My voice has been upgraded to sound more natural and human-like using ElevenLabs\' latest technology.'
+                },
+                'sarah': {
+                    'short': 'Welcome! I\'m Sarah, ready to help you.',
+                    'full': 'Welcome to our interactive demo! I\'m Sarah, and I\'m excited to show you what our AI can do. You\'ll notice my voice sounds much more natural and engaging than before.'
+                },
+                'elli': {
+                    'short': 'Hey there! I\'m Elli, and I\'m super excited to help!',
+                    'full': 'Hey there! I\'m Elli, and I\'m super excited to walk you through this amazing demo! With my new voice upgrade, I sound way more lively and natural. Let\'s get started!'
+                }
+            };
+
+            const text = texts[voiceId][length];
+
+            if (currentButton) {
+                currentButton.classList.remove('playing');
+                currentButton.textContent = currentButton.textContent.replace('🛑 Stop', '🎙️ Test');
+            }
+
+            button.classList.add('playing');
+            button.textContent = '🛑 Stop ' + button.textContent.split(' ').slice(2).join(' ');
+            currentButton = button;
+
+            try {
+                // Switch to the selected voice
+                voiceManager.switchVoicePersonality(personality);
+                voiceManager.setVoice(getVoiceCharacter(voiceId).id);
+
+                await voiceManager.speak(text);
+
+                // Reset button
+                button.classList.remove('playing');
+                button.textContent = button.textContent.replace('🛑 Stop ', '🎙️ Test ');
+                currentButton = null;
+            } catch (error) {
+                console.error('Voice test failed:', error);
+                button.classList.remove('playing');
+                button.textContent = button.textContent.replace('🛑 Stop ', '🎙️ Test ');
+                currentButton = null;
+            }
+        }
+
+        async function testCustomText() {
+            const textarea = document.getElementById('custom-text');
+            const text = textarea.value.trim();
+
+            if (!text) {
+                alert('Please enter some text to test');
+                return;
+            }
+
+            const button = event.target;
+            button.classList.add('playing');
+            button.textContent = '🛑 Stop Testing';
+
+            try {
+                await voiceManager.speak(text);
+                button.classList.remove('playing');
+                button.textContent = '🎙️ Test Custom Text';
+            } catch (error) {
+                console.error('Custom text test failed:', error);
+                button.classList.remove('playing');
+                button.textContent = '🎙️ Test Custom Text';
+            }
+        }
+
+        function stopVoice() {
+            voiceManager.stop();
+            if (currentButton) {
+                currentButton.classList.remove('playing');
+                currentButton.textContent = currentButton.textContent.replace('🛑 Stop', '🎙️ Test');
+                currentButton = null;
+            }
+
+            // Reset all buttons
+            document.querySelectorAll('.test-button.playing').forEach(btn => {
+                btn.classList.remove('playing');
+                btn.textContent = btn.textContent.replace('🛑 Stop', '🎙️ Test');
+            });
+        }
+    </script>
+</body>
+
+</html>

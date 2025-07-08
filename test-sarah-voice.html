@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test Sarah's Voice - Main Demo Voice</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            max-width: 600px;
+            margin: 50px auto;
+            padding: 30px;
+            background: linear-gradient(135deg, #48bb78 0%, #38a169 100%);
+            min-height: 100vh;
+            color: #333;
+        }
+
+        .container {
+            background: white;
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+
+        h1 {
+            color: #38a169;
+            margin-bottom: 20px;
+        }
+
+        .sarah-info {
+            background: #f0fff4;
+            border: 2px solid #9ae6b4;
+            border-radius: 15px;
+            padding: 20px;
+            margin: 20px 0;
+        }
+
+        .sarah-info h2 {
+            color: #22543d;
+            margin-top: 0;
+        }
+
+        .test-button {
+            background: linear-gradient(135deg, #48bb78, #38a169);
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 1.1em;
+            font-weight: 600;
+            margin: 10px;
+            transition: all 0.3s ease;
+            min-width: 200px;
+        }
+
+        .test-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(72, 187, 120, 0.3);
+        }
+
+        .test-button:active {
+            transform: translateY(0);
+        }
+
+        .test-button.playing {
+            background: #e53e3e;
+        }
+
+        .voice-sample {
+            background: #edf2f7;
+            padding: 15px;
+            border-radius: 10px;
+            margin: 15px 0;
+            font-style: italic;
+            border-left: 4px solid #48bb78;
+        }
+
+        .status {
+            margin: 20px 0;
+            padding: 15px;
+            border-radius: 10px;
+            font-weight: 500;
+        }
+
+        .status.success {
+            background: #c6f6d5;
+            color: #22543d;
+        }
+
+        .status.error {
+            background: #fed7d7;
+            color: #c53030;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h1>🎙️ Sarah - Main Demo Voice</h1>
+
+        <div class="sarah-info">
+            <h2>✨ Sarah's Voice Profile</h2>
+            <p><strong>Personality:</strong> Warm & Approachable</p>
+            <p><strong>Best for:</strong> Product demonstrations, customer interactions</p>
+            <p><strong>Voice Model:</strong> ElevenLabs Multilingual v2</p>
+            <p><strong>Quality:</strong> Professional, Human-like</p>
+        </div>
+
+        <div id="status" class="status">
+            <span id="status-text">Loading voice system...</span>
+        </div>
+
+        <div class="voice-sample">
+            <strong>Demo Script:</strong><br>
+            "Welcome to our product demonstration! I'm Sarah, your AI assistant. I'm here to guide you through all the
+            amazing features we have to offer. My voice has been specially optimized to sound warm, natural, and
+            professional."
+        </div>
+
+        <button class="test-button" id="testSarahVoice" onclick="testSarahVoice()">🎙️ Test Sarah's Voice</button>
+        <button class="test-button" id="testShortGreeting" onclick="testShortGreeting()">👋 Quick Greeting</button>
+        <button class="test-button" id="testDemoIntro" onclick="testDemoIntro()">🚀 Demo Introduction</button>
+        <button class="test-button" onclick="stopVoice()">🛑 Stop Voice</button>
+
+        <div style="margin-top: 30px;">
+            <h3>🎚️ Voice Controls</h3>
+            <label>Volume: <input type="range" id="volume" min="0" max="1" step="0.1" value="0.8"
+                    oninput="updateVolume(this.value)"></label>
+            <span id="volume-display">0.8</span>
+        </div>
+    </div>
+
+    <script src="config-simple.js"></script>
+    <script src="voice-config.js"></script>
+    <script>
+        let voiceManager;
+        let currentButton = null;
+
+        document.addEventListener('DOMContentLoaded', async () => {
+            try {
+                voiceManager = new VoiceManager();
+                checkStatus();
+            } catch (error) {
+                console.error('Failed to initialize voice manager:', error);
+                showStatus('Failed to initialize voice system', 'error');
+            }
+        });
+
+        function checkStatus() {
+            const statusDiv = document.getElementById('status');
+            const statusText = document.getElementById('status-text');
+
+            if (isApiKeyConfigured()) {
+                statusDiv.className = 'status success';
+                statusText.textContent = `✅ Sarah's voice ready! Using ElevenLabs API with voice ID: ${getVoiceCharacter('sarah').id}`;
+            } else {
+                statusDiv.className = 'status error';
+                statusText.textContent = '❌ ElevenLabs API key not configured. Sarah will use Web Speech fallback.';
+            }
+        }
+
+        function showStatus(message, type) {
+            const statusDiv = document.getElementById('status');
+            const statusText = document.getElementById('status-text');
+            statusDiv.className = `status ${type}`;
+            statusText.textContent = message;
+        }
+
+        async function testSarahVoice() {
+            const text = "Welcome to our product demonstration! I'm Sarah, your AI assistant. I'm here to guide you through all the amazing features we have to offer. My voice has been specially optimized to sound warm, natural, and professional.";
+            await playVoice(text, 'testSarahVoice');
+        }
+
+        async function testShortGreeting() {
+            const text = "Hello! I'm Sarah, your warm and friendly AI assistant. I'm excited to help you today!";
+            await playVoice(text, 'testShortGreeting');
+        }
+
+        async function testDemoIntro() {
+            const text = "Welcome to our interactive demo! I'm Sarah, and I'll be your guide today. Let's explore what makes our product special together.";
+            await playVoice(text, 'testDemoIntro');
+        }
+
+        async function playVoice(text, buttonId) {
+            const button = document.getElementById(buttonId) || event.target;
+
+            if (currentButton) {
+                currentButton.classList.remove('playing');
+                currentButton.textContent = currentButton.textContent.replace('🛑 Stop', '🎙️ Test');
+            }
+
+            button.classList.add('playing');
+            const originalText = button.textContent;
+            button.textContent = '🛑 Stop ' + originalText.replace('🎙️ Test ', '').replace('👋 ', '').replace('🚀 ', '');
+            currentButton = button;
+
+            try {
+                // Ensure we're using Sarah's voice
+                voiceManager.setVoice(getVoiceCharacter('sarah').id);
+
+                showStatus('🎙️ Playing Sarah\'s voice...', 'success');
+                await voiceManager.speak(text);
+
+                // Reset button
+                button.classList.remove('playing');
+                button.textContent = originalText;
+                currentButton = null;
+                showStatus('✅ Sarah\'s voice test completed successfully!', 'success');
+
+            } catch (error) {
+                console.error('Voice test failed:', error);
+                button.classList.remove('playing');
+                button.textContent = originalText;
+                currentButton = null;
+                showStatus('❌ Voice test failed: ' + error.message, 'error');
+            }
+        }
+
+        function stopVoice() {
+            if (voiceManager) {
+                voiceManager.stop();
+            }
+
+            if (currentButton) {
+                const originalText = currentButton.textContent.replace('🛑 Stop ', '🎙️ Test ');
+                currentButton.classList.remove('playing');
+                currentButton.textContent = originalText;
+                currentButton = null;
+            }
+
+            showStatus('🛑 Voice stopped', 'success');
+        }
+
+        function updateVolume(value) {
+            if (voiceManager) {
+                voiceManager.setVolume(parseFloat(value));
+            }
+            document.getElementById('volume-display').textContent = value;
+        }
+    </script>
+</body>
+
+</html>
