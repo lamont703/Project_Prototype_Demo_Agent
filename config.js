@@ -86,7 +86,12 @@ function validateConfig() {
     
     // Check if API key is set
     if (CONFIG.ELEVENLABS_API_KEY === 'your_elevenlabs_api_key_here') {
-        warnings.push('⚠️ ElevenLabs API key not configured. Voice features will use Web Speech API fallback.');
+        const isProduction = window.location.hostname.includes('github.io');
+        if (isProduction) {
+            warnings.push('ℹ️ Production deployment: Using Web Speech API (ElevenLabs API key not configured)');
+        } else {
+            warnings.push('⚠️ ElevenLabs API key not configured. Voice features will use Web Speech API fallback.');
+        }
     }
     
     // Log warnings in debug mode

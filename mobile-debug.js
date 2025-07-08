@@ -34,6 +34,12 @@ class MobileDebugger {
         this.log(`📱 Mobile: ${isMobile ? 'Yes' : 'No'}`);
         this.log(`📱 Touch: ${('ontouchstart' in window) ? 'Yes' : 'No'}`);
         this.log(`📱 Screen: ${window.innerWidth}x${window.innerHeight}`);
+        
+        // Check API key configuration
+        if (typeof getConfig === 'function') {
+            const apiKey = getConfig('ELEVENLABS_API_KEY');
+            this.log(`🔑 API Key: ${apiKey === 'your_elevenlabs_api_key_here' ? 'Not configured (using Web Speech)' : 'Configured'}`);
+        }
     }
 
     testVoiceCapabilities() {

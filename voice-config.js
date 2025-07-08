@@ -59,11 +59,16 @@ class VoiceManager {
         if (isApiKeyConfigured()) {
             this.isEnabled = getConfig('VOICE_ENABLED');
             if (getConfig('DEBUG_MODE')) {
-                console.log('✅ ElevenLabs voice enabled with API key');
+                console.log('✅ Voice enabled with ElevenLabs API key');
             }
         } else {
             if (getConfig('DEBUG_MODE')) {
-                console.log('⚠️ ElevenLabs API key not configured, using fallback');
+                const isProduction = window.location.hostname.includes('github.io');
+                if (isProduction) {
+                    console.log('ℹ️ Production deployment: Using Web Speech API fallback');
+                } else {
+                    console.log('⚠️ ElevenLabs API key not configured, using Web Speech API fallback');
+                }
             }
             this.isEnabled = VOICE_CONFIG.fallback.useWebSpeech;
         }
@@ -424,7 +429,10 @@ class VoiceManager {
 // Helper function to check if API key is configured
 function isApiKeyConfigured() {
     const apiKey = getConfig('ELEVENLABS_API_KEY');
-    return apiKey && apiKey !== 'YOUR_ELEVENLABS_API_KEY_HERE' && apiKey.trim() !== '';
+    return apiKey && 
+           apiKey !== 'your_elevenlabs_api_key_here' && 
+           apiKey !== 'YOUR_ELEVENLABS_API_KEY_HERE' && 
+           apiKey.trim() !== '';
 }
 
 // Export for use in other modules
