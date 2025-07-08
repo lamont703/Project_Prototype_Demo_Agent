@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Demo Test Page</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            background: #1a1a1a;
+            color: #ffffff;
+        }
+
+        .test-section {
+            margin: 20px 0;
+            padding: 20px;
+            border: 2px solid #25CC32;
+            border-radius: 8px;
+            background: rgba(37, 204, 50, 0.1);
+        }
+
+        .test-button {
+            background: #25CC32;
+            color: #000000;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin: 5px;
+            font-weight: bold;
+        }
+
+        .test-button:hover {
+            background: #1fa829;
+        }
+
+        .debug-output {
+            background: #333;
+            padding: 10px;
+            border-radius: 5px;
+            margin: 10px 0;
+            font-family: monospace;
+            white-space: pre-wrap;
+            max-height: 200px;
+            overflow-y: auto;
+        }
+
+        #test-element {
+            width: 200px;
+            height: 100px;
+            background: #25CC32;
+            margin: 20px auto;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            color: #000000;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>AI Assistant Demo Test</h1>
+
+    <div class="test-section">
+        <h2>Visual Effects Test</h2>
+        <div id="test-element">Test Element</div>
+        <button class="test-button" onclick="testHighlight()">Test Highlight</button>
+        <button class="test-button" onclick="testZoom()">Test Zoom</button>
+        <button class="test-button" onclick="testClear()">Clear Effects</button>
+    </div>
+
+    <div class="test-section">
+        <h2>Script Loading Test</h2>
+        <button class="test-button" onclick="testScriptLoading()">Test Script Loading</button>
+        <div id="script-status" class="debug-output"></div>
+    </div>
+
+    <div class="test-section">
+        <h2>Demo Flow Test</h2>
+        <button class="test-button" onclick="testDemoFlow()">Test Demo Flow</button>
+        <div id="demo-status" class="debug-output"></div>
+    </div>
+
+    <div class="test-section">
+        <h2>Console Output</h2>
+        <div id="console-output" class="debug-output"></div>
+    </div>
+
+    <!-- Load required scripts -->
+    <script src="tour-config.js"></script>
+    <script src="voice-demo-script.js"></script>
+    <script src="ai-assistant.js"></script>
+
+    <script>
+        // Override console.log to capture output
+        const originalLog = console.log;
+        const originalError = console.error;
+        const originalWarn = console.warn;
+
+        function addToConsole(message, type = 'log') {
+            const consoleOutput = document.getElementById('console-output');
+            if (consoleOutput) {
+                consoleOutput.textContent += `[${type.toUpperCase()}] ${message}\n`;
+                consoleOutput.scrollTop = consoleOutput.scrollHeight;
+            }
+        }
+
+        console.log = function (...args) {
+            addToConsole(args.join(' '), 'log');
+            originalLog.apply(console, args);
+        };
+
+        console.error = function (...args) {
+            addToConsole(args.join(' '), 'error');
+            originalError.apply(console, args);
+        };
+
+        console.warn = function (...args) {
+            addToConsole(args.join(' '), 'warn');
+            originalWarn.apply(console, args);
+        };
+
+        // Test functions
+        function testHighlight() {
+            console.log('Testing highlight effect...');
+            const element = document.getElementById('test-element');
+            if (window.assistant) {
+                window.assistant.highlightElement(element);
+            } else {
+                console.error('Assistant not found');
+            }
+        }
+
+        function testZoom() {
+            console.log('Testing zoom effect...');
+            const element = document.getElementById('test-element');
+            if (window.assistant) {
+                window.assistant.zoomElement(element, 1.3);
+            } else {
+                console.error('Assistant not found');
+            }
+        }
+
+        function testClear() {
+            console.log('Clearing effects...');
+            if (window.assistant) {
+                window.assistant.clearHighlight();
+                window.assistant.clearZoom();
+            } else {
+                console.error('Assistant not found');
+            }
+        }
+
+        function testScriptLoading() {
+            const statusDiv = document.getElementById('script-status');
+            let status = 'Script Loading Status:\n';
+
+            status += `TOUR_CONFIG: ${typeof TOUR_CONFIG !== 'undefined' ? 'Loaded' : 'Not loaded'}\n`;
+            status += `VOICE_DEMO_SCRIPT: ${typeof VOICE_DEMO_SCRIPT !== 'undefined' ? 'Loaded' : 'Not loaded'}\n`;
+            status += `AIAssistant: ${typeof AIAssistant !== 'undefined' ? 'Loaded' : 'Not loaded'}\n`;
+            status += `Assistant instance: ${window.assistant ? 'Created' : 'Not created'}\n`;
+
+            if (typeof TOUR_CONFIG !== 'undefined') {
+                status += `Tour config steps: ${TOUR_CONFIG.length}\n`;
+            }
+
+            if (typeof VOICE_DEMO_SCRIPT !== 'undefined') {
+                status += `Voice demo sections: ${Object.keys(VOICE_DEMO_SCRIPT).length}\n`;
+            }
+
+            statusDiv.textContent = status;
+        }
+
+        function testDemoFlow() {
+            const statusDiv = document.getElementById('demo-status');
+            let status = 'Demo Flow Test:\n';
+
+            if (window.assistant) {
+                status += 'Assistant instance found\n';
+                status += `isVoiceDemo: ${window.assistant.isVoiceDemo}\n`;
+                status += `voiceDemoStep: ${window.assistant.voiceDemoStep}\n`;
+
+                // Test voice demo script structure
+                if (typeof VOICE_DEMO_SCRIPT !== 'undefined') {
+                    status += 'Voice demo script structure:\n';
+                    status += `- demoFlow: ${VOICE_DEMO_SCRIPT.demoFlow ? 'Present' : 'Missing'}\n`;
+                    if (VOICE_DEMO_SCRIPT.demoFlow) {
+                        status += `- heroSection: ${VOICE_DEMO_SCRIPT.demoFlow.heroSection ? 'Present' : 'Missing'}\n`;
+                        status += `- featuresSection: ${VOICE_DEMO_SCRIPT.demoFlow.featuresSection ? 'Present' : 'Missing'}\n`;
+                        status += `- demoSection: ${VOICE_DEMO_SCRIPT.demoFlow.demoSection ? 'Present' : 'Missing'}\n`;
+                        status += `- pricingSection: ${VOICE_DEMO_SCRIPT.demoFlow.pricingSection ? 'Present' : 'Missing'}\n`;
+                    }
+                }
+
+                status += '\nTesting demo step execution...\n';
+                try {
+                    // Test a single demo step
+                    window.assistant.addMessage('Testing demo flow execution...', 'assistant');
+                    status += 'Demo step test successful\n';
+                } catch (error) {
+                    status += `Demo step test failed: ${error.message}\n`;
+                }
+            } else {
+                status += 'Assistant instance not found\n';
+            }
+
+            statusDiv.textContent = status;
+        }
+
+        // Initialize when page loads
+        document.addEventListener('DOMContentLoaded', function () {
+            console.log('Test page loaded, initializing assistant...');
+
+            // Wait for assistant to be ready
+            setTimeout(() => {
+                if (typeof AIAssistant !== 'undefined') {
+                    window.assistant = new AIAssistant();
+                    console.log('Assistant initialized for testing');
+                } else {
+                    console.error('AIAssistant class not found');
+                }
+
+                // Auto-run script loading test
+                testScriptLoading();
+            }, 1000);
+        });
+    </script>
+</body>
+
+</html>

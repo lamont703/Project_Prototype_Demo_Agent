@@ -1,0 +1,631 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Product Dashboard - AI Product Demo</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        /* Additional dashboard-specific styles */
+        .dashboard-container {
+            padding: 2rem;
+            max-width: 1400px;
+            margin: 0 auto;
+            margin-top: 100px;
+        }
+
+        .dashboard-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+            padding: 1rem;
+            background: linear-gradient(145deg, #1a1a1a, #0a0a0a);
+            border-radius: 12px;
+            border: 1px solid rgba(37, 204, 50, 0.2);
+        }
+
+        .dashboard-title {
+            color: #25CC32;
+            font-size: 2rem;
+            font-weight: 700;
+        }
+
+        .dashboard-nav {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .nav-item {
+            background: rgba(37, 204, 50, 0.1);
+            color: #25CC32;
+            border: 1px solid rgba(37, 204, 50, 0.3);
+            padding: 0.5rem 1rem;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+        }
+
+        .nav-item:hover {
+            background: rgba(37, 204, 50, 0.2);
+            transform: translateY(-2px);
+        }
+
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .dashboard-widget {
+            background: linear-gradient(145deg, #1a1a1a, #0a0a0a);
+            padding: 2rem;
+            border-radius: 12px;
+            border: 1px solid rgba(37, 204, 50, 0.2);
+            transition: all 0.3s ease;
+        }
+
+        .dashboard-widget:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 35px rgba(37, 204, 50, 0.2);
+        }
+
+        .widget-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+
+        .widget-title {
+            color: #25CC32;
+            font-size: 1.2rem;
+            font-weight: 600;
+        }
+
+        .widget-icon {
+            font-size: 1.5rem;
+        }
+
+        .widget-content {
+            color: #ffffff;
+        }
+
+        .metric-large {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: #25CC32;
+            margin-bottom: 0.5rem;
+        }
+
+        .metric-label {
+            color: #888888;
+            font-size: 0.9rem;
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 8px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 4px;
+            overflow: hidden;
+            margin: 1rem 0;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #25CC32, #1ea52a);
+            border-radius: 4px;
+            transition: width 0.5s ease;
+        }
+
+        .activity-feed {
+            background: linear-gradient(145deg, #1a1a1a, #0a0a0a);
+            padding: 2rem;
+            border-radius: 12px;
+            border: 1px solid rgba(37, 204, 50, 0.2);
+            grid-column: span 3;
+        }
+
+        .activity-item {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 1rem;
+            border-bottom: 1px solid rgba(37, 204, 50, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .activity-item:hover {
+            background: rgba(37, 204, 50, 0.05);
+        }
+
+        .activity-icon {
+            width: 40px;
+            height: 40px;
+            background: rgba(37, 204, 50, 0.2);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+        }
+
+        .activity-details {
+            flex: 1;
+        }
+
+        .activity-title {
+            color: #ffffff;
+            font-weight: 600;
+            margin-bottom: 0.2rem;
+        }
+
+        .activity-time {
+            color: #888888;
+            font-size: 0.8rem;
+        }
+
+        .critical-component {
+            border: 2px solid #ff4444;
+            background: rgba(255, 68, 68, 0.1);
+        }
+
+        .critical-component .widget-title {
+            color: #ff4444;
+        }
+
+        .success-component {
+            border: 2px solid #25CC32;
+            background: rgba(37, 204, 50, 0.1);
+        }
+
+        /* Mobile Responsive Styles */
+        @media (max-width: 480px) {
+            .dashboard-container {
+                padding: 1rem;
+                margin-top: 80px;
+            }
+
+            .dashboard-header {
+                flex-direction: column;
+                gap: 1rem;
+                padding: 1rem;
+            }
+
+            .dashboard-title {
+                font-size: 1.5rem;
+                text-align: center;
+            }
+
+            .dashboard-nav {
+                flex-direction: column;
+                gap: 0.5rem;
+                width: 100%;
+            }
+
+            .nav-item {
+                text-align: center;
+                padding: 0.75rem;
+                font-size: 0.9rem;
+            }
+
+            .dashboard-grid {
+                grid-template-columns: 1fr;
+                gap: 1rem;
+            }
+
+            .dashboard-widget {
+                padding: 1rem;
+            }
+
+            .widget-title {
+                font-size: 1rem;
+            }
+
+            .widget-icon {
+                font-size: 1.2rem;
+            }
+
+            .metric-large {
+                font-size: 1.8rem;
+            }
+
+            .metric-label {
+                font-size: 0.8rem;
+            }
+
+            .activity-feed {
+                padding: 1rem;
+                grid-column: span 1;
+            }
+
+            .activity-item {
+                padding: 0.75rem;
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 0.5rem;
+            }
+
+            .activity-icon {
+                width: 30px;
+                height: 30px;
+                font-size: 1rem;
+            }
+
+            .activity-title {
+                font-size: 0.9rem;
+            }
+
+            .activity-time {
+                font-size: 0.75rem;
+            }
+        }
+
+        @media (min-width: 481px) and (max-width: 768px) {
+            .dashboard-container {
+                padding: 1.5rem;
+                margin-top: 90px;
+            }
+
+            .dashboard-header {
+                flex-direction: column;
+                gap: 1rem;
+                padding: 1.5rem;
+            }
+
+            .dashboard-title {
+                font-size: 1.8rem;
+                text-align: center;
+            }
+
+            .dashboard-nav {
+                flex-wrap: wrap;
+                justify-content: center;
+                gap: 0.75rem;
+            }
+
+            .nav-item {
+                padding: 0.5rem 0.75rem;
+                font-size: 0.9rem;
+            }
+
+            .dashboard-grid {
+                grid-template-columns: 1fr 1fr;
+                gap: 1.5rem;
+            }
+
+            .dashboard-widget {
+                padding: 1.5rem;
+            }
+
+            .widget-title {
+                font-size: 1.1rem;
+            }
+
+            .metric-large {
+                font-size: 2rem;
+            }
+
+            .activity-feed {
+                grid-column: span 2;
+            }
+
+            .activity-item {
+                padding: 1rem;
+            }
+
+            .activity-icon {
+                width: 35px;
+                height: 35px;
+                font-size: 1.1rem;
+            }
+        }
+
+        @media (min-width: 769px) and (max-width: 1024px) {
+            .dashboard-container {
+                padding: 2rem;
+                max-width: 1200px;
+            }
+
+            .dashboard-grid {
+                grid-template-columns: 1fr 1fr 1fr;
+                gap: 1.5rem;
+            }
+
+            .dashboard-widget {
+                padding: 1.5rem;
+            }
+
+            .metric-large {
+                font-size: 2.2rem;
+            }
+
+            .activity-feed {
+                grid-column: span 3;
+            }
+        }
+
+        /* Touch and Hover Optimizations */
+        @media (hover: none) and (pointer: coarse) {
+            .dashboard-widget:hover {
+                transform: none;
+                box-shadow: 0 4px 20px rgba(37, 204, 50, 0.15);
+            }
+
+            .nav-item:hover {
+                transform: none;
+                background: rgba(37, 204, 50, 0.15);
+            }
+
+            .activity-item:hover {
+                background: rgba(37, 204, 50, 0.03);
+            }
+
+            .nav-item {
+                min-height: 44px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+            }
+
+            .dashboard-widget {
+                border: 1px solid rgba(37, 204, 50, 0.3);
+            }
+
+            .activity-item {
+                border-bottom: 1px solid rgba(37, 204, 50, 0.15);
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <header id="header">
+        <nav class="navbar">
+            <div class="nav-brand">
+                <h2>ProductDemo</h2>
+            </div>
+            <ul class="nav-links">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="#analytics">Analytics</a></li>
+                <li><a href="#settings">Settings</a></li>
+                <li><a href="#support">Support</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <div class="dashboard-container">
+        <div class="dashboard-header" id="dashboard-header">
+            <h1 class="dashboard-title">Product Dashboard</h1>
+            <div class="dashboard-nav">
+                <a href="#" class="nav-item">Export Data</a>
+                <a href="#" class="nav-item">Settings</a>
+                <a href="index.html" class="nav-item">← Back to Home</a>
+            </div>
+        </div>
+
+        <div class="dashboard-grid">
+            <div class="dashboard-widget success-component" id="performance-widget">
+                <div class="widget-header">
+                    <h3 class="widget-title">Performance</h3>
+                    <div class="widget-icon">🚀</div>
+                </div>
+                <div class="widget-content">
+                    <div class="metric-large">98.5%</div>
+                    <div class="metric-label">System Uptime</div>
+                    <div class="progress-bar">
+                        <div class="progress-fill" style="width: 98.5%"></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="dashboard-widget" id="users-widget">
+                <div class="widget-header">
+                    <h3 class="widget-title">Active Users</h3>
+                    <div class="widget-icon">👥</div>
+                </div>
+                <div class="widget-content">
+                    <div class="metric-large">2,847</div>
+                    <div class="metric-label">Currently Online</div>
+                    <div class="progress-bar">
+                        <div class="progress-fill" style="width: 75%"></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="dashboard-widget critical-component" id="alerts-widget">
+                <div class="widget-header">
+                    <h3 class="widget-title">System Alerts</h3>
+                    <div class="widget-icon">⚠️</div>
+                </div>
+                <div class="widget-content">
+                    <div class="metric-large">3</div>
+                    <div class="metric-label">Require Attention</div>
+                    <div class="progress-bar">
+                        <div class="progress-fill" style="width: 20%; background: #ff4444;"></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="dashboard-widget" id="revenue-widget">
+                <div class="widget-header">
+                    <h3 class="widget-title">Revenue</h3>
+                    <div class="widget-icon">💰</div>
+                </div>
+                <div class="widget-content">
+                    <div class="metric-large">$47.2K</div>
+                    <div class="metric-label">This Month</div>
+                    <div class="progress-bar">
+                        <div class="progress-fill" style="width: 85%"></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="dashboard-widget" id="conversions-widget">
+                <div class="widget-header">
+                    <h3 class="widget-title">Conversions</h3>
+                    <div class="widget-icon">📈</div>
+                </div>
+                <div class="widget-content">
+                    <div class="metric-large">12.8%</div>
+                    <div class="metric-label">Conversion Rate</div>
+                    <div class="progress-bar">
+                        <div class="progress-fill" style="width: 65%"></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="dashboard-widget" id="support-widget">
+                <div class="widget-header">
+                    <h3 class="widget-title">Support Tickets</h3>
+                    <div class="widget-icon">🎫</div>
+                </div>
+                <div class="widget-content">
+                    <div class="metric-large">23</div>
+                    <div class="metric-label">Open Tickets</div>
+                    <div class="progress-bar">
+                        <div class="progress-fill" style="width: 40%"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="activity-feed" id="activity-feed">
+            <div class="widget-header">
+                <h3 class="widget-title">Recent Activity</h3>
+                <div class="widget-icon">📊</div>
+            </div>
+            <div class="widget-content">
+                <div class="activity-item">
+                    <div class="activity-icon">✅</div>
+                    <div class="activity-details">
+                        <div class="activity-title">System backup completed successfully</div>
+                        <div class="activity-time">2 minutes ago</div>
+                    </div>
+                </div>
+                <div class="activity-item">
+                    <div class="activity-icon">🔄</div>
+                    <div class="activity-details">
+                        <div class="activity-title">Database optimization in progress</div>
+                        <div class="activity-time">15 minutes ago</div>
+                    </div>
+                </div>
+                <div class="activity-item">
+                    <div class="activity-icon">🚨</div>
+                    <div class="activity-details">
+                        <div class="activity-title">High memory usage detected on server-03</div>
+                        <div class="activity-time">32 minutes ago</div>
+                    </div>
+                </div>
+                <div class="activity-item">
+                    <div class="activity-icon">📈</div>
+                    <div class="activity-details">
+                        <div class="activity-title">Traffic spike detected - 150% above normal</div>
+                        <div class="activity-time">1 hour ago</div>
+                    </div>
+                </div>
+                <div class="activity-item">
+                    <div class="activity-icon">🎯</div>
+                    <div class="activity-details">
+                        <div class="activity-title">New conversion goal achieved</div>
+                        <div class="activity-time">2 hours ago</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- AI Assistant Components -->
+    <div id="ai-assistant" class="ai-assistant">
+        <div class="assistant-button" id="assistantButton">
+            <div class="assistant-avatar">
+                <div class="avatar-face">🤖</div>
+                <div class="pulse-ring"></div>
+            </div>
+        </div>
+
+        <div class="assistant-overlay" id="assistantOverlay">
+            <div class="assistant-header">
+                <h3>AI Dashboard Guide</h3>
+                <button class="close-button" id="closeAssistant">×</button>
+            </div>
+            <div class="assistant-content">
+                <div class="voice-status" id="voiceStatus">
+                    <div class="voice-avatar">
+                        <div class="voice-face" id="voiceFace">🎙️</div>
+                        <div class="voice-pulse" id="voicePulse"></div>
+                    </div>
+                    <div class="voice-info">
+                        <h3 id="voiceTitle">AI Voice Assistant</h3>
+                        <p id="voiceDescription">Click a button below to start your voice-guided demo</p>
+                        <div class="voice-indicator-bar" id="voiceIndicatorBar">
+                            <div class="voice-wave" id="voiceWave1"></div>
+                            <div class="voice-wave" id="voiceWave2"></div>
+                            <div class="voice-wave" id="voiceWave3"></div>
+                            <div class="voice-wave" id="voiceWave4"></div>
+                            <div class="voice-wave" id="voiceWave5"></div>
+                        </div>
+                    </div>
+                    <div class="minimized-controls">
+                        <button class="mini-control-btn" id="miniExpandBtn" title="Expand">⚡</button>
+                        <button class="mini-control-btn" id="miniPauseBtn" title="Pause">⏸️</button>
+                        <button class="mini-control-btn" id="miniStopBtn" title="Stop">⏹️</button>
+                    </div>
+                </div>
+
+                <div class="demo-controls">
+                    <h4>Dashboard Experience</h4>
+                    <div class="demo-options">
+                        <button class="demo-btn primary" id="startVoiceTour">🎙️ Start Voice Tour</button>
+                        <button class="demo-btn" id="quickDemo">⚡ Quick Demo</button>
+                        <button class="demo-btn" id="interactiveMode">🎮 Interactive Mode</button>
+                    </div>
+                </div>
+
+                <div class="voice-controls-panel" id="voiceControlsPanel">
+                    <div class="voice-control-row">
+                        <button class="voice-control-btn" id="playBtn" title="Play">▶️</button>
+                        <button class="voice-control-btn" id="pauseBtn" title="Pause">⏸️</button>
+                        <button class="voice-control-btn" id="stopBtn" title="Stop">⏹️</button>
+                        <button class="voice-control-btn" id="skipBtn" title="Skip">⏭️</button>
+                        <button class="voice-control-btn" id="voiceSettingsBtn" title="Settings">⚙️</button>
+                    </div>
+                </div>
+
+                <div class="voice-settings" id="voiceSettingsPanel">
+                    <h4>Voice Settings</h4>
+                    <div class="voice-setting-group">
+                        <label for="voiceSelect">Voice:</label>
+                        <select class="voice-select" id="voiceSelect"></select>
+                    </div>
+                    <div class="voice-setting-group">
+                        <label for="volumeSlider">Volume: <span id="volumeValue">100</span>%</label>
+                        <input type="range" class="voice-slider" id="volumeSlider" min="0" max="100" value="100">
+                    </div>
+                    <div class="voice-setting-group">
+                        <label for="speedSlider">Speed: <span id="speedValue">1.0</span>x</label>
+                        <input type="range" class="voice-slider" id="speedSlider" min="0.5" max="2.0" step="0.1"
+                            value="1.0">
+                    </div>
+                    <button class="demo-btn" id="testVoice">Test Voice</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Highlight Overlay -->
+    <div id="highlightOverlay" class="highlight-overlay"></div>
+
+    <script src="config.js"></script>
+    <script src="config.local.js"></script>
+    <script src="voice-config.js"></script>
+    <script src="dashboard-tour-config.js"></script>
+    <script src="voice-demo-script.js"></script>
+    <script src="ai-assistant.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Voice Demo Example - Product Demo Specialist</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        .demo-container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 2rem;
+            margin-top: 100px;
+        }
+
+        .demo-header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .demo-title {
+            color: #25CC32;
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .demo-subtitle {
+            color: #ffffff;
+            font-size: 1.2rem;
+            opacity: 0.9;
+        }
+
+        .conversation-demo {
+            background: linear-gradient(145deg, #1a1a1a, #0a0a0a);
+            border-radius: 16px;
+            padding: 2rem;
+            border: 1px solid rgba(37, 204, 50, 0.3);
+            margin-bottom: 2rem;
+        }
+
+        .conversation-header {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 2rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid rgba(37, 204, 50, 0.2);
+        }
+
+        .conversation-avatar {
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(45deg, #25CC32, #1ea52a);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+        }
+
+        .conversation-info h3 {
+            color: #25CC32;
+            margin-bottom: 0.5rem;
+        }
+
+        .conversation-info p {
+            color: #888888;
+            font-size: 0.9rem;
+        }
+
+        .message-example {
+            margin-bottom: 2rem;
+            padding: 1rem;
+            background: rgba(37, 204, 50, 0.1);
+            border-left: 3px solid #25CC32;
+            border-radius: 8px;
+        }
+
+        .message-label {
+            color: #25CC32;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+        }
+
+        .message-content {
+            color: #ffffff;
+            line-height: 1.6;
+            font-size: 1.1rem;
+        }
+
+        .user-message {
+            background: rgba(255, 255, 255, 0.1);
+            border-left: 3px solid #888888;
+        }
+
+        .user-message .message-label {
+            color: #888888;
+        }
+
+        .features-showcase {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .feature-showcase {
+            background: linear-gradient(145deg, #1a1a1a, #0a0a0a);
+            padding: 2rem;
+            border-radius: 12px;
+            border: 1px solid rgba(37, 204, 50, 0.2);
+        }
+
+        .feature-showcase h3 {
+            color: #25CC32;
+            margin-bottom: 1rem;
+        }
+
+        .try-it-section {
+            text-align: center;
+            background: linear-gradient(145deg, #111111, #000000);
+            padding: 3rem;
+            border-radius: 20px;
+            margin-top: 3rem;
+        }
+
+        .try-it-section h2 {
+            color: #25CC32;
+            margin-bottom: 1rem;
+        }
+
+        .demo-buttons {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            margin-top: 2rem;
+        }
+    </style>
+</head>
+
+<body>
+    <header id="header">
+        <nav class="navbar">
+            <div class="nav-brand">
+                <h2>ProductDemo</h2>
+            </div>
+            <ul class="nav-links">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="product-dashboard.html">Dashboard</a></li>
+                <li><a href="#demo">Voice Demo</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <div class="demo-container">
+        <div class="demo-header">
+            <h1 class="demo-title">AI Voice Demo Script</h1>
+            <p class="demo-subtitle">Experience how our AI assistant sounds during a live product presentation</p>
+        </div>
+
+        <div class="conversation-demo">
+            <div class="conversation-header">
+                <div class="conversation-avatar">🤖</div>
+                <div class="conversation-info">
+                    <h3>Alex - AI Product Guide</h3>
+                    <p>Natural, conversational product demonstrations</p>
+                </div>
+            </div>
+
+            <div class="message-example">
+                <div class="message-label">AI Welcome Message</div>
+                <div class="message-content">
+                    "Hello there! Welcome to our product demo. I'm Alex, your AI-powered product guide, and I'm
+                    absolutely thrilled to show you around today. Think of me as your personal product expert who's here
+                    to make sure you see everything that makes our platform special."
+                </div>
+            </div>
+
+            <div class="message-example">
+                <div class="message-label">Setting Expectations</div>
+                <div class="message-content">
+                    "Before we dive in, let me tell you what we're going to cover in the next few minutes. I'll walk you
+                    through our main features, show you some real-world examples, and demonstrate how this can transform
+                    your business. Sound good?"
+                </div>
+            </div>
+
+            <div class="message-example">
+                <div class="message-label">Engaging Introduction</div>
+                <div class="message-content">
+                    "I love doing these demos because every business is unique, and I get to show you exactly how our
+                    platform can solve your specific challenges. Ready to get started?"
+                </div>
+            </div>
+
+            <div class="message-example">
+                <div class="message-label">Feature Explanation</div>
+                <div class="message-content">
+                    "First up - lightning-fast performance. Now, I know everyone claims to be 'fast,' but let me put
+                    this in perspective. We're talking about processing thousands of requests per second. That means
+                    when your customers are using your product, they're not waiting around. They're getting instant
+                    results. And happy customers? They become loyal customers."
+                </div>
+            </div>
+
+            <div class="message-example user-message">
+                <div class="message-label">User Question</div>
+                <div class="message-content">
+                    "What about integrations? How does this work with our existing tools?"
+                </div>
+            </div>
+
+            <div class="message-example">
+                <div class="message-label">AI Response</div>
+                <div class="message-content">
+                    "Integration is actually one of our strongest points! We have pre-built connectors for over 200
+                    popular business tools. Salesforce, HubSpot, Slack, Microsoft Teams, Google Workspace - if you use
+                    it, we probably integrate with it. And if we don't? Our custom integration service can build it for
+                    you."
+                </div>
+            </div>
+
+            <div class="message-example user-message">
+                <div class="message-label">User Follow-up</div>
+                <div class="message-content">
+                    "That sounds great, but what about security? We handle sensitive data."
+                </div>
+            </div>
+
+            <div class="message-example">
+                <div class="message-label">AI Security Response</div>
+                <div class="message-content">
+                    "Security is absolutely critical, and I'm glad you asked! We're SOC 2 compliant, GDPR compliant, and
+                    we encrypt everything - data at rest, data in transit, everywhere. We also do third-party security
+                    audits quarterly. Your data is safer with us than it is on your own servers, and I can back that up
+                    with certifications."
+                </div>
+            </div>
+
+            <div class="message-example">
+                <div class="message-label">Closing & Call to Action</div>
+                <div class="message-content">
+                    "So here's what we've covered today: a platform that's lightning-fast, AI-powered, secure, and
+                    designed to scale with your business. The question isn't whether this platform can help your
+                    business - it's whether you can afford not to have these capabilities. I can set you up with a free
+                    trial right now, or if you have more questions, I can connect you with one of our solution
+                    specialists. What sounds better to you?"
+                </div>
+            </div>
+        </div>
+
+        <div class="features-showcase">
+            <div class="feature-showcase">
+                <h3>🎙️ Natural Voice Flow</h3>
+                <p>Our AI assistant uses conversational language patterns that sound natural and engaging, avoiding
+                    robotic or scripted responses.</p>
+            </div>
+
+            <div class="feature-showcase">
+                <h3>🤝 Interactive Q&A</h3>
+                <p>Handles real-time questions about pricing, integrations, security, ROI, and more with contextual,
+                    detailed responses.</p>
+            </div>
+
+            <div class="feature-showcase">
+                <h3>🎯 Contextual Responses</h3>
+                <p>Adapts responses based on user interests and concerns, providing relevant information when it's most
+                    needed.</p>
+            </div>
+
+            <div class="feature-showcase">
+                <h3>📈 Sales-Focused</h3>
+                <p>Designed with sales psychology in mind, addressing objections and guiding prospects toward
+                    conversion.</p>
+            </div>
+
+            <div class="feature-showcase">
+                <h3>🔄 Multi-Turn Conversations</h3>
+                <p>Maintains context across multiple interactions, creating a natural back-and-forth conversation flow.
+                </p>
+            </div>
+
+            <div class="feature-showcase">
+                <h3>🎪 Demo Integration</h3>
+                <p>Seamlessly combines voice narration with visual demonstrations, zooming, highlighting, and
+                    navigation.</p>
+            </div>
+        </div>
+
+        <div class="try-it-section">
+            <h2>Ready to Experience the Voice Demo?</h2>
+            <p>Try our interactive AI assistant with full voice demo capabilities</p>
+            <div class="demo-buttons">
+                <a href="index.html" class="cta-button">🚀 Try Voice Demo</a>
+                <a href="product-dashboard.html" class="cta-button-secondary">📊 See Dashboard Demo</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- AI Assistant Components -->
+    <div id="ai-assistant" class="ai-assistant">
+        <div class="assistant-button" id="assistantButton">
+            <div class="assistant-avatar">
+                <div class="avatar-face">🤖</div>
+                <div class="pulse-ring"></div>
+            </div>
+        </div>
+
+        <div class="assistant-overlay" id="assistantOverlay">
+            <div class="assistant-header">
+                <h3>AI Voice Demo Guide</h3>
+                <button class="close-button" id="closeAssistant">×</button>
+            </div>
+            <div class="assistant-content">
+                <div class="chat-messages" id="chatMessages"></div>
+                <div class="assistant-controls">
+                    <button class="control-btn" id="startTour">🎙️ Try Voice Demo</button>
+                    <button class="control-btn" id="skipStep">Skip</button>
+                    <button class="control-btn" id="pauseTour">Pause</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Highlight Overlay -->
+    <div id="highlightOverlay" class="highlight-overlay"></div>
+
+    <script src="voice-demo-script.js"></script>
+    <script src="ai-assistant.js"></script>
+</body>
+
+</html>

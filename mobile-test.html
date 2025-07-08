@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mobile Test - AI Product Demo</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 20px;
+            background: #000;
+            color: #fff;
+            line-height: 1.6;
+        }
+
+        .test-info {
+            background: rgba(37, 204, 50, 0.1);
+            border: 1px solid #25CC32;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+        }
+
+        .device-info {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 10px;
+            border-radius: 5px;
+            margin: 10px 0;
+        }
+
+        .test-link {
+            display: inline-block;
+            background: #25CC32;
+            color: #000;
+            padding: 12px 24px;
+            text-decoration: none;
+            border-radius: 6px;
+            margin: 10px 10px 10px 0;
+            font-weight: bold;
+        }
+
+        .test-checklist {
+            background: rgba(255, 255, 255, 0.05);
+            padding: 15px;
+            border-radius: 8px;
+            margin: 20px 0;
+        }
+
+        .test-checklist h3 {
+            color: #25CC32;
+            margin-top: 0;
+        }
+
+        .test-checklist ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .test-checklist li {
+            padding: 5px 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .test-checklist li:before {
+            content: "□ ";
+            color: #25CC32;
+            font-weight: bold;
+            margin-right: 8px;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>📱 Mobile Test Page</h1>
+
+    <div class="test-info">
+        <h2>AI Product Demo Agent - Mobile Verification</h2>
+        <p>This page helps you test the mobile-friendly features of the AI Product Demo Agent.</p>
+    </div>
+
+    <div class="device-info">
+        <h3>Current Device Info</h3>
+        <p><strong>Screen Width:</strong> <span id="screenWidth"></span>px</p>
+        <p><strong>Screen Height:</strong> <span id="screenHeight"></span>px</p>
+        <p><strong>Viewport Width:</strong> <span id="viewportWidth"></span>px</p>
+        <p><strong>Viewport Height:</strong> <span id="viewportHeight"></span>px</p>
+        <p><strong>Device Type:</strong> <span id="deviceType"></span></p>
+        <p><strong>Touch Support:</strong> <span id="touchSupport"></span></p>
+        <p><strong>User Agent:</strong> <span id="userAgent"></span></p>
+    </div>
+
+    <div class="test-links">
+        <h3>Test Links</h3>
+        <a href="index.html" class="test-link">🏠 Main Demo Page</a>
+        <a href="product-dashboard.html" class="test-link">📊 Dashboard Demo</a>
+    </div>
+
+    <div class="test-checklist">
+        <h3>✅ Mobile Features to Test</h3>
+        <ul>
+            <li>Assistant button is properly sized (50px on small mobile)</li>
+            <li>Assistant overlay opens as bottom drawer (not full screen)</li>
+            <li>Overlay height is limited to 45-50% of viewport</li>
+            <li>Hero image displays properly and proportionally</li>
+            <li>All text is readable and properly sized</li>
+            <li>Touch targets are minimum 44px (iOS compliance)</li>
+            <li>Animations work smoothly without lag</li>
+            <li>Voice features work on mobile</li>
+            <li>Cursor effects are disabled on touch devices</li>
+            <li>Mobile tap indicators (👆) appear during tours</li>
+            <li>Content remains scrollable when assistant is open</li>
+            <li>Navigation menu adapts to mobile</li>
+            <li>Feature cards stack properly</li>
+            <li>Pricing cards stack on small screens</li>
+            <li>Demo interface adapts to mobile layout</li>
+        </ul>
+    </div>
+
+    <div class="test-checklist">
+        <h3>🎯 Interaction Tests</h3>
+        <ul>
+            <li>Tap assistant button to open overlay</li>
+            <li>Verify overlay doesn't cover entire screen</li>
+            <li>Test voice tour with mobile indicators</li>
+            <li>Check dashboard demo navigation</li>
+            <li>Verify animations run smoothly</li>
+            <li>Test responsive breakpoints by rotating device</li>
+            <li>Confirm touch feedback works properly</li>
+            <li>Verify scrolling works when assistant is open</li>
+        </ul>
+    </div>
+
+    <script>
+        // Display device information
+        function updateDeviceInfo() {
+            document.getElementById('screenWidth').textContent = screen.width;
+            document.getElementById('screenHeight').textContent = screen.height;
+            document.getElementById('viewportWidth').textContent = window.innerWidth;
+            document.getElementById('viewportHeight').textContent = window.innerHeight;
+            document.getElementById('userAgent').textContent = navigator.userAgent;
+
+            // Detect device type
+            const width = window.innerWidth;
+            let deviceType = 'Desktop';
+            if (width <= 480) deviceType = 'Small Mobile';
+            else if (width <= 768) deviceType = 'Medium Mobile/Tablet';
+            else if (width <= 1024) deviceType = 'Tablet';
+
+            document.getElementById('deviceType').textContent = deviceType;
+
+            // Detect touch support
+            const hasTouch = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
+            document.getElementById('touchSupport').textContent = hasTouch ? 'Yes' : 'No';
+        }
+
+        // Update on load and resize
+        updateDeviceInfo();
+        window.addEventListener('resize', updateDeviceInfo);
+        window.addEventListener('orientationchange', () => {
+            setTimeout(updateDeviceInfo, 100);
+        });
+    </script>
+</body>
+
+</html>

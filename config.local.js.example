@@ -1,0 +1,29 @@
+// =====================================================
+// Local Configuration Example
+// =====================================================
+// 
+// Copy this file to config.local.js and add your actual API key
+// config.local.js is ignored by git for security
+//
+// INSTRUCTIONS:
+// 1. Copy this file: cp config.local.js.example config.local.js
+// 2. Add your actual ElevenLabs API key below
+// 3. The app will automatically use your local config
+
+// Override the default config with your actual API key
+if (typeof CONFIG !== 'undefined') {
+    CONFIG.ELEVENLABS_API_KEY = 'your_actual_elevenlabs_api_key_here';
+    
+    // You can also override other settings:
+    // CONFIG.DEFAULT_VOICE = 'sarah';
+    // CONFIG.DEFAULT_VOLUME = 0.9;
+    // CONFIG.DEBUG_MODE = false;
+}
+
+// For module systems
+if (typeof module !== 'undefined' && module.exports) {
+    module.exports = {
+        ELEVENLABS_API_KEY: 'your_actual_elevenlabs_api_key_here',
+        // Add other overrides here
+    };
+} 

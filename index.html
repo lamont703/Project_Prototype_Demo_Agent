@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Product Demo - SaaS Platform</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+    <!-- Demo Product Page -->
+    <header id="header">
+        <nav class="navbar">
+            <div class="nav-brand">
+                <h2>ProductDemo</h2>
+            </div>
+            <ul class="nav-links">
+                <li><a href="#features">Features</a></li>
+                <li><a href="#pricing">Pricing</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <section id="hero-section" class="hero">
+            <div class="hero-content">
+                <h1>Transform Your Business with AI</h1>
+                <p>Discover the power of automation and intelligent workflows that scale with your business needs.</p>
+                <button class="cta-button">Get Started Free</button>
+            </div>
+            <div class="hero-image">
+                <div class="dashboard-mockup">
+                    <div class="mockup-header"></div>
+                    <div class="mockup-content">
+                        <div class="mockup-chart"></div>
+                        <div class="mockup-stats">
+                            <div class="stat-item"></div>
+                            <div class="stat-item"></div>
+                            <div class="stat-item"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="features" class="features">
+            <h2>Why Choose Our Platform?</h2>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">🚀</div>
+                    <h3>Lightning Fast</h3>
+                    <p>Process thousands of requests per second with our optimized infrastructure.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🤖</div>
+                    <h3>AI-Powered</h3>
+                    <p>Leverage machine learning to automate complex business processes.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🔒</div>
+                    <h3>Enterprise Security</h3>
+                    <p>Bank-level encryption and compliance with industry standards.</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="demo-section" class="demo-section">
+            <h2>See It In Action</h2>
+            <div class="demo-container">
+                <div class="demo-interface">
+                    <div class="demo-sidebar">
+                        <div class="demo-menu-item active">Dashboard</div>
+                        <div class="demo-menu-item">Analytics</div>
+                        <div class="demo-menu-item">Automation</div>
+                        <div class="demo-menu-item">Settings</div>
+                    </div>
+                    <div class="demo-main">
+                        <div class="demo-toolbar">
+                            <button class="demo-btn">New Project</button>
+                            <button class="demo-btn">Import</button>
+                            <button class="demo-btn">Export</button>
+                        </div>
+                        <div class="demo-content">
+                            <div class="demo-widget">
+                                <h4>Performance Metrics</h4>
+                                <div class="demo-chart-placeholder"></div>
+                            </div>
+                            <div class="demo-widget">
+                                <h4>Recent Activity</h4>
+                                <div class="demo-activity-list">
+                                    <div class="activity-item">✅ Task completed</div>
+                                    <div class="activity-item">📊 Report generated</div>
+                                    <div class="activity-item">🔄 Sync in progress</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="pricing" class="pricing">
+            <h2>Simple, Transparent Pricing</h2>
+            <div class="pricing-grid">
+                <div class="pricing-card">
+                    <h3>Starter</h3>
+                    <div class="price">$29<span>/month</span></div>
+                    <ul class="features-list">
+                        <li>Up to 1,000 API calls</li>
+                        <li>Basic analytics</li>
+                        <li>Email support</li>
+                    </ul>
+                    <button class="pricing-btn">Choose Plan</button>
+                </div>
+                <div class="pricing-card featured">
+                    <h3>Professional</h3>
+                    <div class="price">$99<span>/month</span></div>
+                    <ul class="features-list">
+                        <li>Up to 10,000 API calls</li>
+                        <li>Advanced analytics</li>
+                        <li>Priority support</li>
+                        <li>Custom integrations</li>
+                    </ul>
+                    <button class="pricing-btn">Choose Plan</button>
+                </div>
+                <div class="pricing-card">
+                    <h3>Enterprise</h3>
+                    <div class="price">Custom</div>
+                    <ul class="features-list">
+                        <li>Unlimited API calls</li>
+                        <li>Custom analytics</li>
+                        <li>24/7 support</li>
+                        <li>On-premise deployment</li>
+                    </ul>
+                    <button class="pricing-btn">Contact Sales</button>
+                </div>
+            </div>
+        </section>
+
+        <section id="contact" class="contact">
+            <h2>Ready to Get Started?</h2>
+            <p>Join thousands of businesses already using our platform</p>
+            <div class="contact-actions">
+                <button class="cta-button">Start Free Trial</button>
+                <button class="cta-button-secondary">Book a Demo</button>
+            </div>
+        </section>
+    </main>
+
+    <!-- AI Assistant Components -->
+    <div id="ai-assistant" class="ai-assistant">
+        <div class="assistant-button" id="assistantButton">
+            <div class="assistant-avatar">
+                <div class="avatar-face">🤖</div>
+                <div class="pulse-ring"></div>
+            </div>
+        </div>
+
+        <div class="assistant-overlay" id="assistantOverlay">
+            <div class="assistant-header">
+                <h3>AI Product Guide</h3>
+                <button class="close-button" id="closeAssistant">×</button>
+            </div>
+            <div class="assistant-content">
+                <!-- Voice Status Display -->
+                <div class="voice-status" id="voiceStatus">
+                    <div class="voice-avatar">
+                        <div class="voice-face" id="voiceFace">🎙️</div>
+                        <div class="voice-pulse" id="voicePulse"></div>
+                    </div>
+                    <div class="voice-info">
+                        <h3 id="voiceTitle">AI Voice Assistant</h3>
+                        <p id="voiceDescription">Click a button below to start your voice-guided demo</p>
+                        <div class="voice-indicator-bar" id="voiceIndicatorBar">
+                            <div class="voice-wave" id="voiceWave1"></div>
+                            <div class="voice-wave" id="voiceWave2"></div>
+                            <div class="voice-wave" id="voiceWave3"></div>
+                            <div class="voice-wave" id="voiceWave4"></div>
+                            <div class="voice-wave" id="voiceWave5"></div>
+                        </div>
+                    </div>
+                    <div class="minimized-controls">
+                        <button class="mini-control-btn" id="miniExpandBtn" title="Expand">⚡</button>
+                        <button class="mini-control-btn" id="miniPauseBtn" title="Pause">⏸️</button>
+                        <button class="mini-control-btn" id="miniStopBtn" title="Stop">⏹️</button>
+                    </div>
+                </div>
+
+                <!-- Demo Controls -->
+                <div class="demo-controls">
+                    <h4>Choose Your Experience</h4>
+                    <div class="demo-options">
+                        <button class="demo-btn primary" id="startVoiceTour">🎯 Start Voice Tour</button>
+                        <button class="demo-btn" id="startVoiceDemo">🎙️ Voice Demo</button>
+                        <button class="demo-btn" id="dashboardDemo">📊 Dashboard Demo</button>
+                        <button class="demo-btn" id="voiceQA">❓ Ask Questions</button>
+                    </div>
+                </div>
+
+                <!-- Voice Controls -->
+                <div class="voice-controls-panel">
+                    <div class="voice-control-row">
+                        <button class="voice-control-btn" id="voiceToggle">🔊 Voice On</button>
+                        <button class="voice-control-btn" id="pauseVoice">⏸️ Pause</button>
+                        <button class="voice-control-btn" id="stopVoice">⏹️ Stop</button>
+                        <button class="voice-control-btn" id="voiceSettings">⚙️ Settings</button>
+                    </div>
+                </div>
+
+                <!-- Voice Settings Panel -->
+                <div id="voiceSettingsPanel" class="voice-settings">
+                    <h4>Voice Settings</h4>
+
+                    <div class="voice-setting-group">
+                        <label for="voiceSelect">Voice Personality:</label>
+                        <select id="voiceSelect" class="voice-select">
+                            <option value="sarah">Sarah - Friendly Female</option>
+                        </select>
+                    </div>
+
+                    <div class="voice-setting-group">
+                        <label for="volumeSlider">Volume: <span id="volumeValue">80%</span></label>
+                        <input type="range" id="volumeSlider" class="voice-slider" min="0" max="100" value="80">
+                    </div>
+
+                    <div class="voice-setting-group">
+                        <label for="speedSlider">Speaking Speed: <span id="speedValue">1.0x</span></label>
+                        <input type="range" id="speedSlider" class="voice-slider" min="0.5" max="2.0" step="0.1"
+                            value="1.0">
+                    </div>
+
+                    <div class="voice-setting-group">
+                        <button class="demo-btn" id="testVoice">🎤 Test Current Voice</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Highlight Overlay -->
+    <div id="highlightOverlay" class="highlight-overlay"></div>
+
+    <script src="config.js"></script>
+    <script src="config.local.js"></script>
+    <script src="tour-config.js"></script>
+    <script src="voice-demo-script.js"></script>
+    <script src="voice-config.js"></script>
+    <script src="ai-assistant.js"></script>
+</body>
+
+</html>
