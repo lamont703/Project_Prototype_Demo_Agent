@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Onboarding Test - AI Product Demo</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        .test-container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 2rem;
+            text-align: center;
+        }
+
+        .test-info {
+            background: linear-gradient(135deg, #f8f9fa, #e9ecef);
+            padding: 2rem;
+            border-radius: 12px;
+            margin: 2rem 0;
+            border: 1px solid rgba(37, 204, 50, 0.2);
+        }
+
+        .test-controls {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin: 2rem 0;
+        }
+
+        .test-btn {
+            background: linear-gradient(135deg, #25CC32, #1ea52a);
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .test-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(37, 204, 50, 0.3);
+        }
+
+        .test-btn.secondary {
+            background: transparent;
+            color: #25CC32;
+            border: 2px solid #25CC32;
+        }
+
+        .test-btn.secondary:hover {
+            background: #25CC32;
+            color: white;
+        }
+
+        .status-info {
+            background: #fff;
+            padding: 1rem;
+            border-radius: 8px;
+            margin: 1rem 0;
+            border-left: 4px solid #25CC32;
+            text-align: left;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="test-container">
+        <h1>🎯 User Onboarding Test</h1>
+        <p>This page demonstrates the user onboarding and notification system.</p>
+
+        <div class="test-info">
+            <h3>🎉 What You'll See:</h3>
+            <ul style="text-align: left; max-width: 500px; margin: 0 auto;">
+                <li><strong>First Visit:</strong> Welcome notification + enhanced AI button + pointing indicator</li>
+                <li><strong>Return Visit:</strong> Subtle hint notification + gentle pulse</li>
+                <li><strong>Scroll Reminder:</strong> Shows after scrolling past 500px</li>
+                <li><strong>Time Reminder:</strong> Shows after 30 seconds if no interaction</li>
+            </ul>
+        </div>
+
+        <div class="test-controls">
+            <button class="test-btn" onclick="resetOnboarding()">🔄 Reset First Visit</button>
+            <button class="test-btn secondary" onclick="testNotification()">🔔 Test Notification</button>
+            <button class="test-btn secondary" onclick="showUserStatus()">📊 Show Status</button>
+        </div>
+
+        <div id="status-display"></div>
+
+        <!-- Dummy content for scroll testing -->
+        <div
+            style="height: 200vh; background: linear-gradient(to bottom, #f8f9fa, #e9ecef); margin: 2rem 0; border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 1.2rem; color: #666;">
+            <div>
+                <h3>📜 Scroll Test Area</h3>
+                <p>Scroll down to trigger the scroll reminder</p>
+                <div style="margin-top: 50vh;">
+                    <h4>🎯 You've scrolled!</h4>
+                    <p>The scroll reminder should appear if you haven't interacted with the AI yet.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- AI Assistant (same as main page) -->
+    <div id="ai-assistant" class="ai-assistant">
+        <div class="assistant-button" id="assistantButton">
+            <div class="assistant-avatar">
+                <div class="avatar-face">🤖</div>
+                <div class="pulse-ring"></div>
+            </div>
+        </div>
+
+        <div class="assistant-overlay" id="assistantOverlay">
+            <div class="assistant-header">
+                <h3>AI Product Guide</h3>
+                <button class="close-button" id="closeAssistant">×</button>
+            </div>
+            <div class="assistant-content">
+                <div class="voice-status" id="voiceStatus">
+                    <div class="voice-avatar">
+                        <div class="voice-face" id="voiceFace">🎙️</div>
+                        <div class="voice-pulse" id="voicePulse"></div>
+                    </div>
+                    <div class="voice-info">
+                        <h3 id="voiceTitle">Onboarding Test</h3>
+                        <p id="voiceDescription">Testing the user onboarding system</p>
+                    </div>
+                    <div class="minimized-controls">
+                        <button class="mini-control-btn" id="miniExpandBtn" title="Expand">⚡</button>
+                        <button class="mini-control-btn" id="miniPauseBtn" title="Pause">⏸️</button>
+                        <button class="mini-control-btn" id="miniStopBtn" title="Stop">⏹️</button>
+                    </div>
+                </div>
+
+                <div class="demo-controls">
+                    <h4>Onboarding Success! 🎉</h4>
+                    <div class="demo-options">
+                        <button class="demo-btn primary" onclick="testComplete()">✅ Test Complete</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="config-simple.js"></script>
+    <script src="tour-config.js"></script>
+    <script src="voice-demo-script.js"></script>
+    <script src="voice-config.js"></script>
+    <script src="ai-assistant.js"></script>
+    <script src="user-onboarding.js"></script>
+
+    <script>
+        function resetOnboarding() {
+            localStorage.removeItem('ai-demo-seen');
+            location.reload();
+        }
+
+        function testNotification() {
+            if (window.userOnboarding) {
+                window.userOnboarding.createNotification({
+                    type: 'test',
+                    title: '🧪 Test Notification',
+                    message: 'This is a test notification to check the system!',
+                    icon: '⚡',
+                    duration: 5000,
+                    actions: [
+                        {
+                            text: 'Great!',
+                            action: () => console.log('Test notification action clicked')
+                        }
+                    ]
+                });
+            }
+        }
+
+        function showUserStatus() {
+            const hasSeenDemo = localStorage.getItem('ai-demo-seen');
+            const statusDiv = document.getElementById('status-display');
+
+            statusDiv.innerHTML = `
+                <div class="status-info">
+                    <h4>📊 User Status</h4>
+                    <p><strong>Has seen demo:</strong> ${hasSeenDemo ? 'Yes' : 'No'}</p>
+                    <p><strong>Current behavior:</strong> ${hasSeenDemo ? 'Returning visitor (subtle hints)' : 'First-time visitor (full onboarding)'}</p>
+                    <p><strong>Active notifications:</strong> ${window.userOnboarding ? window.userOnboarding.notifications.length : 0}</p>
+                </div>
+            `;
+        }
+
+        function testComplete() {
+            alert('🎉 Onboarding test completed successfully! The user has interacted with the AI assistant.');
+            if (window.userOnboarding) {
+                window.userOnboarding.clearOnboardingEffects();
+            }
+        }
+
+        // Show initial status
+        setTimeout(showUserStatus, 1000);
+    </script>
+</body>
+
+</html>

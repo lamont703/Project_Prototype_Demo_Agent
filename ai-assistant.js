@@ -296,11 +296,39 @@ class AIAssistant {
                 return;
             }
             
-            // If not active, start the tour
+            // If not active, show the demo options (like other start buttons)
+            this.isActive = true;
+            
+            // Show overlay with demo options
+            console.log('🚀 Opening AI assistant with demo options');
+            this.updateVoiceStatus('AI Assistant Ready', 'Choose your experience below');
+            this.setVoiceFace('🤖');
+            
+            // Show overlay
+            this.assistantOverlay.classList.add('active');
+        }
+    }
+
+    async startOnboardingTour() {
+        // Special method for onboarding system to auto-start tour
+        if (this.assistantOverlay) {
+            // If already active and minimized, expand it
+            if (this.isActive && this.assistantOverlay.classList.contains('minimized')) {
+                this.expandAssistant();
+                return;
+            }
+            
+            // If already active and expanded, close it
+            if (this.isActive && !this.assistantOverlay.classList.contains('minimized')) {
+                this.closeAssistant();
+                return;
+            }
+            
+            // If not active, start the tour directly
             this.isActive = true;
             
             // Auto-start the voice tour and minimize immediately
-            console.log('🚀 Auto-starting voice tour and minimizing assistant');
+            console.log('🚀 Auto-starting voice tour from onboarding');
             this.updateVoiceStatus('Starting Tour...', 'Get ready for an amazing demo experience!');
             this.setVoiceFace('🎯');
             
@@ -328,6 +356,17 @@ class AIAssistant {
             }
             
             console.log('📱 Assistant minimized for optimal viewing');
+        }
+    }
+
+    // Helper method to ensure assistant minimizes for any demo start
+    autoMinimizeForDemo(delay = 1500) {
+        if (this.assistantOverlay && this.assistantOverlay.classList.contains('active')) {
+            setTimeout(() => {
+                if (!this.assistantOverlay.classList.contains('minimized')) {
+                    this.minimizeAssistant();
+                }
+            }, delay);
         }
     }
 
@@ -384,6 +423,11 @@ class AIAssistant {
         this.showDemoCursor();
         
         await this.speak("Welcome to our interactive product tour! I'll guide you through all the key features with visual highlights and explanations. Let's begin!");
+        
+        // Minimize assistant for unobstructed demo viewing
+        setTimeout(() => {
+            this.minimizeAssistant();
+        }, 2000);
         
         setTimeout(() => {
             this.runTourStep(0);
@@ -538,6 +582,11 @@ class AIAssistant {
         // Show the demo cursor
         this.showDemoCursor();
         
+        // Minimize assistant for unobstructed demo viewing
+        setTimeout(() => {
+            this.minimizeAssistant();
+        }, 1500);
+        
         try {
             if (typeof VOICE_DEMO_SCRIPT !== 'undefined') {
                 const script = VOICE_DEMO_SCRIPT.conversation;
@@ -582,6 +631,13 @@ class AIAssistant {
         this.clearCursorTrails();
         this.updateVoiceStatus('Demo Complete', 'Ready for questions');
         this.setVoiceFace('🤖');
+        
+        // Keep assistant minimized after demo completion
+        setTimeout(() => {
+            if (!this.assistantOverlay.classList.contains('minimized')) {
+                this.minimizeAssistant();
+            }
+        }, 2000);
     }
 
     // Dashboard Demo
@@ -598,6 +654,11 @@ class AIAssistant {
         
         // Show the demo cursor
         this.showDemoCursor();
+        
+        // Minimize assistant for unobstructed demo viewing
+        setTimeout(() => {
+            this.minimizeAssistant();
+        }, 1500);
         
         await this.speak("Let me show you our powerful dashboard interface. I'll navigate to the dashboard and explain each component.");
         
@@ -617,6 +678,11 @@ class AIAssistant {
         this.currentDemo = 'qa';
         this.updateVoiceStatus('Q&A Mode', 'Ask me anything about our product');
         this.setVoiceFace('❓');
+        
+        // Minimize assistant for focused Q&A experience
+        setTimeout(() => {
+            this.minimizeAssistant();
+        }, 2500);
         
         await this.speak("I'm ready to answer your questions! You can ask me about pricing, features, integrations, security, or anything else about our product.");
         
@@ -671,6 +737,15 @@ class AIAssistant {
         this.hideDemoCursor();
         this.clearCursorTrails();
         this.demoState.isRunning = false;
+        
+        // Keep assistant minimized when stopping demos
+        if (this.assistantOverlay && this.assistantOverlay.classList.contains('active')) {
+            setTimeout(() => {
+                if (!this.assistantOverlay.classList.contains('minimized')) {
+                    this.minimizeAssistant();
+                }
+            }, 1000);
+        }
     }
 
     toggleVoiceSettings() {

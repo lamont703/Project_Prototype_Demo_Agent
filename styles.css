@@ -442,6 +442,382 @@ section h2 {
     margin-top: 2rem;
 }
 
+/* =====================================================
+   User Onboarding & Notifications
+   ===================================================== */
+
+/* Notification System */
+.user-notification {
+    position: fixed;
+    z-index: 10000;
+    background: linear-gradient(135deg, #ffffff, #f8f9fa);
+    border: 1px solid rgba(37, 204, 50, 0.3);
+    border-radius: 12px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2), 0 0 20px rgba(37, 204, 50, 0.1);
+    -webkit-backdrop-filter: blur(10px);
+    backdrop-filter: blur(10px);
+    max-width: 400px;
+    min-width: 300px;
+    opacity: 0;
+    transform: translateY(20px) scale(0.95);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif;
+}
+
+.user-notification.show {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+}
+
+.user-notification.dismissing {
+    opacity: 0;
+    transform: translateY(-20px) scale(0.95);
+}
+
+/* Notification Positions */
+.user-notification.top-right {
+    top: 20px;
+    right: 20px;
+}
+
+.user-notification.top-left {
+    top: 20px;
+    left: 20px;
+}
+
+.user-notification.bottom-right {
+    bottom: 20px;
+    right: 20px;
+}
+
+.user-notification.bottom-left {
+    bottom: 20px;
+    left: 20px;
+}
+
+.user-notification.bottom-center {
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%) translateY(20px) scale(0.95);
+}
+
+.user-notification.bottom-center.show {
+    transform: translateX(-50%) translateY(0) scale(1);
+}
+
+.user-notification.center {
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) translateY(20px) scale(0.95);
+    max-width: 500px;
+}
+
+.user-notification.center.show {
+    transform: translate(-50%, -50%) translateY(0) scale(1);
+}
+
+/* Notification Content */
+.notification-content {
+    display: flex;
+    align-items: flex-start;
+    padding: 20px;
+    gap: 15px;
+}
+
+.notification-icon {
+    font-size: 24px;
+    flex-shrink: 0;
+    animation: gentle-bounce 2s ease-in-out infinite;
+}
+
+.notification-text {
+    flex: 1;
+    color: #333;
+}
+
+.notification-title {
+    font-size: 16px;
+    font-weight: 600;
+    color: #1a1a1a;
+    margin-bottom: 5px;
+}
+
+.notification-message {
+    font-size: 14px;
+    color: #666;
+    line-height: 1.4;
+}
+
+.notification-close {
+    background: none;
+    border: none;
+    font-size: 20px;
+    color: #999;
+    cursor: pointer;
+    padding: 0;
+    width: 24px;
+    height: 24px;
+    flex-shrink: 0;
+    transition: color 0.2s ease;
+}
+
+.notification-close:hover {
+    color: #333;
+}
+
+/* Notification Actions */
+.notification-actions {
+    padding: 0 20px 20px;
+    display: flex;
+    gap: 10px;
+    justify-content: flex-end;
+}
+
+.notification-action {
+    background: linear-gradient(135deg, #25CC32, #1ea52a);
+    color: white;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 6px;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.notification-action:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(37, 204, 50, 0.3);
+}
+
+.notification-action:last-child {
+    background: transparent;
+    color: #666;
+    border: 1px solid #ddd;
+}
+
+.notification-action:last-child:hover {
+    background: #f5f5f5;
+    transform: translateY(-1px);
+}
+
+/* Notification Types */
+.user-notification.welcome {
+    border-color: rgba(37, 204, 50, 0.5);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2), 0 0 30px rgba(37, 204, 50, 0.2);
+}
+
+.user-notification.hint {
+    background: linear-gradient(135deg, #fff9e6, #fffbf0);
+    border-color: rgba(255, 193, 7, 0.5);
+}
+
+.user-notification.reminder {
+    background: linear-gradient(135deg, #e8f4fd, #f0f8ff);
+    border-color: rgba(0, 123, 255, 0.3);
+}
+
+/* Enhanced AI Button */
+.assistant-button.onboarding-highlight {
+    animation: enhanced-pulse 2s ease-in-out infinite;
+    box-shadow: 0 0 0 0 rgba(37, 204, 50, 0.7), 0 8px 25px rgba(37, 204, 50, 0.3);
+}
+
+.onboarding-pulse-overlay {
+    position: absolute;
+    top: -10px;
+    left: -10px;
+    right: -10px;
+    bottom: -10px;
+    border: 3px solid rgba(37, 204, 50, 0.6);
+    border-radius: 50%;
+    animation: expanding-pulse 2s ease-in-out infinite;
+    pointer-events: none;
+}
+
+.assistant-button.gentle-pulse {
+    animation: gentle-pulse 3s ease-in-out infinite;
+}
+
+/* Pointing Indicator */
+.pointing-indicator {
+    position: fixed;
+    z-index: 9999;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    animation: pointing-bounce 1s ease-in-out infinite;
+    pointer-events: none;
+}
+
+.indicator-arrow {
+    font-size: 24px;
+    animation: arrow-point 1.5s ease-in-out infinite;
+}
+
+.indicator-text {
+    background: rgba(37, 204, 50, 0.9);
+    color: white;
+    padding: 6px 12px;
+    border-radius: 20px;
+    font-size: 13px;
+    font-weight: 600;
+    white-space: nowrap;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+.pointing-indicator.fade-out {
+    opacity: 0;
+    transform: translateY(-10px);
+    transition: all 0.3s ease;
+}
+
+/* Animations */
+@keyframes enhanced-pulse {
+    0% {
+        box-shadow: 0 0 0 0 rgba(37, 204, 50, 0.7), 0 8px 25px rgba(37, 204, 50, 0.3);
+        transform: scale(1);
+    }
+    50% {
+        box-shadow: 0 0 0 15px rgba(37, 204, 50, 0), 0 8px 35px rgba(37, 204, 50, 0.4);
+        transform: scale(1.05);
+    }
+    100% {
+        box-shadow: 0 0 0 0 rgba(37, 204, 50, 0), 0 8px 25px rgba(37, 204, 50, 0.3);
+        transform: scale(1);
+    }
+}
+
+@keyframes expanding-pulse {
+    0% {
+        transform: scale(0.8);
+        opacity: 0.8;
+    }
+    50% {
+        transform: scale(1.2);
+        opacity: 0.3;
+    }
+    100% {
+        transform: scale(1.4);
+        opacity: 0;
+    }
+}
+
+@keyframes gentle-pulse {
+    0%, 100% {
+        transform: scale(1);
+        box-shadow: 0 4px 15px rgba(37, 204, 50, 0.2);
+    }
+    50% {
+        transform: scale(1.02);
+        box-shadow: 0 6px 20px rgba(37, 204, 50, 0.3);
+    }
+}
+
+@keyframes gentle-bounce {
+    0%, 100% {
+        transform: translateY(0);
+    }
+    50% {
+        transform: translateY(-3px);
+    }
+}
+
+@keyframes pointing-bounce {
+    0%, 100% {
+        transform: translateY(0);
+    }
+    50% {
+        transform: translateY(-5px);
+    }
+}
+
+@keyframes arrow-point {
+    0%, 100% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.2);
+    }
+}
+
+/* Mobile Responsive */
+@media (max-width: 768px) {
+    .user-notification {
+        max-width: calc(100vw - 40px);
+        min-width: auto;
+        margin: 0 20px;
+    }
+    
+    .user-notification.top-right,
+    .user-notification.top-left {
+        top: 20px;
+        left: 20px;
+        right: 20px;
+        width: auto;
+    }
+    
+    .user-notification.bottom-right,
+    .user-notification.bottom-left {
+        bottom: 20px;
+        left: 20px;
+        right: 20px;
+        width: auto;
+    }
+    
+    .user-notification.center {
+        top: 50%;
+        left: 20px;
+        right: 20px;
+        width: auto;
+        max-width: none;
+        transform: translateY(-50%) translateY(20px) scale(0.95);
+    }
+    
+    .user-notification.center.show {
+        transform: translateY(-50%) translateY(0) scale(1);
+    }
+    
+    .pointing-indicator {
+        font-size: 18px;
+    }
+    
+    .indicator-arrow {
+        font-size: 20px;
+    }
+    
+    .indicator-text {
+        font-size: 12px;
+        padding: 5px 10px;
+    }
+}
+
+/* Dark mode support */
+@media (prefers-color-scheme: dark) {
+    .user-notification {
+        background: linear-gradient(135deg, #1a1a1a, #2d2d2d);
+        border-color: rgba(37, 204, 50, 0.4);
+        color: #ffffff;
+    }
+    
+    .notification-title {
+        color: #ffffff;
+    }
+    
+    .notification-message {
+        color: #cccccc;
+    }
+    
+    .notification-close {
+        color: #cccccc;
+    }
+    
+    .notification-close:hover {
+        color: #ffffff;
+    }
+}
+
 /* AI Assistant Styles */
 .ai-assistant {
     position: fixed;
