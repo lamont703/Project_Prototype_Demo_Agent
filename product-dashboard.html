@@ -620,16 +620,7 @@
     <!-- Highlight Overlay -->
     <div id="highlightOverlay" class="highlight-overlay"></div>
 
-    <script src="config.js"></script>
-    <script>
-        // Load config.local.js only if it exists (for local development)
-        const script = document.createElement('script');
-        script.src = 'config.local.js';
-        script.onerror = function () {
-            console.log('📝 config.local.js not found (expected in production)');
-        };
-        document.head.appendChild(script);
-    </script>
+    <script src="config-simple.js"></script>
     <script src="voice-config.js"></script>
     <script src="dashboard-tour-config.js"></script>
     <script src="voice-demo-script.js"></script>
